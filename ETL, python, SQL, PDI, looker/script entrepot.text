@@ -1,0 +1,80 @@
+create database  IF NOT EXISTS yelp;
+
+USE yelp;
+CREATE TABLE IF NOT EXISTS `business_CA` (
+    `business_id` VARCHAR(22) CHARACTER SET utf8 NOT NULL,
+    `name` TEXT CHARACTER SET utf8,
+    `address` TEXT CHARACTER SET utf8,
+    `city` TEXT CHARACTER SET utf8,
+    `state` VARCHAR(2) CHARACTER SET utf8,
+    `postal_code` INT,
+    `latitude` DECIMAL(12,10),
+    `longitude` DECIMAL(13,10),
+    `stars` DECIMAL(2,1),
+    `review_count` INT,
+    `is_open` INT,
+    `categories` TEXT CHARACTER SET utf8,
+    `hours` TEXT CHARACTER SET utf8
+);
+
+
+CREATE TABLE IF NOT EXISTS `user_CA` (
+    `user_id` VARCHAR(22) CHARACTER SET utf8 NOT NULL,
+    `name` VARCHAR(255) CHARACTER SET utf8,
+    `review_count` INT,
+    `yelping_since` DATETIME,
+    `useful` INT,
+    `funny` INT,
+    `cool` INT,
+    `fans` INT,
+    `average_stars` NUMERIC(3,2),
+    `compliment_hot` INT,
+    `compliment_more` INT,
+    `compliment_profile` INT,
+    `compliment_cute` INT,
+    `compliment_list` INT,
+    `compliment_note` INT,
+    `compliment_plain` INT,
+    `compliment_cool` INT,
+    `compliment_funny` INT,
+    `compliment_writer` INT,
+    `compliment_photos` INT
+);
+
+CREATE TABLE IF NOT EXISTS `review_CA` (
+    `review_id` VARCHAR(22) CHARACTER SET utf8 NOT NULL,
+    `user_id` VARCHAR(22) CHARACTER SET utf8 NOT NULL,
+    `business_id` VARCHAR(22) CHARACTER SET utf8 NOT NULL,
+    `stars` NUMERIC(2,1),
+    `useful` INT,
+    `funny` INT,
+    `cool` INT,
+    `date` datetime
+);
+
+
+CREATE TABLE IF NOT EXISTS MAPPING_BUSINESS_NOTE (
+    business_id VARCHAR(22) NOT NULL,
+    review_count INT,
+    categorie_note VARCHAR(50)
+);
+
+
+
+CREATE TABLE IF NOT EXISTS MAPPING_FANS_CATEGORIE (
+    user_id VARCHAR(22) NOT NULL,
+    fans INT,
+    categorie_fans VARCHAR(50)
+);
+
+
+CREATE TABLE IF NOT EXISTS REVIEW_DATE_DETAIL (
+    review_id VARCHAR(22) NOT NULL,
+    date DATETIME,
+    annee INT,
+    mois INT,
+    jour INT,
+    heure INT,
+    minute INT,
+    seconde INT
+);
