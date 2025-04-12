@@ -1,0 +1,640 @@
+---
+title: "Séries Temporelles projet"
+author: "zoé khadija maxence"
+date: "2024-01-21"
+output: html_document
+---
+
+##libraries
+```{r}
+library(tseries)
+library(forecast)
+library(TSA)
+library(sarima)
+library(signal)
+library(TSstudio)
+library(stargazer)
+
+```
+
+##Exercice 1
+
+#a)
+```{r}
+set.seed(123)
+x<- function(){
+  fonc <-e <- rnorm(200)
+  for (t in 2:200) fonc[t] <- sin(t) + e[t] -0.2*e[t-1]
+  return(fonc)
+}
+
+simuA1<-x()
+plot(simuA1, type="l", lwd=2)
+
+set.seed(100)
+simuA2<-x()
+lines(simuA2,col="pink", lwd=2)
+
+set.seed(126)
+simuA3<-x()
+lines(simuA3,col="skyblue", lwd=2)
+
+legend("topright", legend = c("Trajectoire 1", "Trajectoire 2", "Trajectoire 3"), 
+       col = c("blue", "pink", "skyblue"), lty = 1)
+
+
+```
+
+#b)
+```{r}
+set.seed(40)
+simuB<- arima.sim(n=200,  list(ma=1))
+plot(simuB)
+
+set.seed(200)
+simuB2<-arima.sim(n=200,list(ma=1))
+lines(simuB2, col="pink", lwd=2)
+
+set.seed(100)
+simuB2<-arima.sim(n=200,list(ma=1))
+lines(simuB2, col="skyblue", lwd=2)
+
+legend("topright", legend = c("Trajectoire 1", "Trajectoire 2", "Trajectoire 3"), 
+       col = c("blue", "pink", "skyblue"), lty = 1)
+```
+
+Nous utilisons le Dickey-Fuller Test pour vérifier la stationnarité de Xt.
+```{r}
+adf.test(simuB)
+```
+La p-value étant inférieure à 5%, on rejette H0, Xt est bien stationnaire
+
+#c)
+```{r}
+simuC<-function(){
+  
+  B<-A<- rnorm(200, sd = 0)
+  X <- rnorm(200, sd = 0)
+  w <- runif(1, 0, 2*pi)
+  for (t in 2:200) X[t] <- A*cos(w*t) + B*sin(w*t)
+  return(X)
+}
+simuCbis<-function(){
+  
+  B<-A<- rnorm(200)
+  X <- rnorm(200)
+  w <- runif(1, 0, 2*pi)
+  for (t in 2:200) X[t] <- A*cos(w*t) + B*sin(w*t)
+  return(X)
+}
+
+set.seed(110)
+simuC1<-simuC()
+plot(simuC1, type = 'l', xlab = 'Temps', ylab = 'Xt', main = 'Simulation C')
+
+set.seed(178)
+simuC2<-simuCbis()
+plot(simuC2, type="l", col="skyblue",lwd=2)
+
+set.seed(100)
+simuC3<-simuC()
+plot(simuC3, type="l", col="pink",lwd=2)
+```
+
+```{r}
+adf.test(simuC2)
+```
+On rejette H0, la simulation C est stationnaire.
+
+#d)
+
+Après inversement des coefficients, voici le processus que j'obtiens:
+```{r}
+set.seed(123)
+simuD<- arima.sim(model=list( ar = c(-0.5)), n=200)
+plot(simuD)
+set.seed(145)
+simuD2<- arima.sim(model=list( ar = c(-0.5)), n=200)
+lines(simuD2, col="skyblue",lwd=2)
+
+
+set.seed(132)
+simuD2<- arima.sim(model=list( ar = c(-0.5)), n=200)
+lines(simuD2, col="pink",lwd=2)
+
+legend("topright", legend = c("Trajectoire 1", "Trajectoire 2", "Trajectoire 3"), 
+       col = c("blue", "pink", "skyblue"), lty = 1)
+
+```
+#e)
+Même chose ici, nous avons inverser le coefficient AR qui est trop grand, nous obtenons: Xt = epsilon(t), que bous pouvons simuler ainsi:
+```{r}
+set.seed(143)
+e<-rnorm(200)
+X<-e
+plot(X, type="l")
+
+set.seed(153)
+e<-rnorm(200)
+X<-e
+lines(X, col="skyblue")
+
+set.seed(139)
+e<-rnorm(200)
+X<-e
+lines(X, col="pink")
+```
+Le processus ci-dessus est stationnaire
+
+##Exercice 2
+Il s'agirait ici d'un processus stochastique car nous observons des prix 
+
+
+#a) Donner une representation graphique du processus: Vous parait-il stationnaire?
+Que voit-on juste en regardant le graphique?
+
+
+```{r}
+p4 <-
+  structure(c(7.67442664464926, 7.9074599944186, 7.69579760157252, 
+              8.20762668411249, 8.2129629884065, 8.18141122276991, 8.40561479474418, 
+              9.23015932638051, 8.62679523008192, 8.08030304186615, 7.58387202076986, 
+              8.3957064296565, 8.13371223696923, 8.60953749482163, 8.16433110248634, 
+              7.89145573678411, 8.08616019675322, 8.57757223253224, 8.41808955974894, 
+              7.86892221582053, 8.31681397206623, 7.9897440930952, 8.20396913569605, 
+              6.72121692470624, 7.71668250525463, 7.36255441930127, 7.69765955524318, 
+              6.9012611566352, 6.17591786729699, 6.87700975748331, 6.66806962470917, 
+              7.26179242121391, 6.46586065185731, 7.02260406012606, 6.33283642875293, 
+              6.70261840249656, 6.73243038096344, 7.07402274519386, 6.40771408896966, 
+              7.21938939680356, 6.10301332111279, 7.02111873527155, 6.83077927945073, 
+              6.97819939268369, 7.95923031334297, 6.47451047327265, 7.39123190113912, 
+              6.53822196092145, 7.31988965081683, 7.54907657247, 7.78905364089963, 
+              7.51066155626875, 8.31480633008134, 8.20445545353559, 8.60472218941289, 
+              7.9751610631338, 7.64619013920673, 7.55833917641335, 7.85082298603233, 
+              9.01049342681495, 9.17493402744326, 9.02552440117335, 9.00524909082795, 
+              8.76647615691986, 7.95923571439175, 8.75766624800384, 8.10418886250978, 
+              8.94445976179212, 7.91102337569775, 8.77804522583868, 7.97535940259607, 
+              8.71036366659363, 8.07374043656621, 7.72235997100041, 7.76449385912411, 
+              7.57234436026174, 7.34397837046173, 7.07487312146805, 7.76675154743265, 
+              7.1031045929846, 7.19039635057819, 6.84727553752312, 6.97134014708781, 
+              6.93435966448117, 6.37684530061505, 6.41037770496339, 6.4177930227568, 
+              6.5082858209062, 6.2968754145135, 6.40131577703437, 6.48908229493505, 
+              6.5653513554029, 6.62570767831495, 7.36957920103761, 6.89036652999422, 
+              7.05650614709488, 6.78123414962589, 6.55711191290552, 7.08886492634895, 
+              7.8371130173023, 7.32544704230974, 7.49587144867587, 7.31061088728084, 
+              7.55113422506256, 7.75601372626495, 8.4570680991997, 9.10961589709226, 
+              8.71780655635123, 8.01102455514411, 8.53480569888516, 8.79253592759738, 
+              7.19883712752316, 7.93786639843944, 7.94466532462802, 7.54700451572469, 
+              8.13165076730517, 8.49572286260507, 9.18121541170035, 8.30872685304299, 
+              8.30491210764785, 8.86340506265368, 7.63771452716383, 7.38995488208759, 
+              7.45065094164352, 7.13945684826586, 6.93239888131745, 7.13298389106729, 
+              6.84758636705845, 6.76510590984311, 6.74577539664862, 7.71487751440034, 
+              7.19671693103508, 6.49723614935365, 6.53431691288675, 7.04816816880435, 
+              6.63299369994936, 6.66516687741102, 6.84299736656804, 6.55807943851279, 
+              6.39305685121112, 6.38609514195561, 6.38295090226573, 6.92869014934639, 
+              6.81066615992384, 6.90059563424647, 6.37033307243753, 6.07386121992505, 
+              7.0759506351816, 7.18168104295813, 7.16179765960016, 6.95217436773977, 
+              7.17973522450899, 7.53408494577889, 7.08165161138365, 8.25249398494027, 
+              6.98249736347345, 8.0287175249305, 8.73972699932426, 7.996080719059, 
+              8.45818540175371, 7.51109984922354, 8.33916579657751, 8.58994602996762, 
+              8.96410255845937, 8.5263639783778, 8.21916893238834, 8.16826764103594, 
+              7.44453713946445, 8.18071184589304, 9.01688667674062, 8.65404925891621, 
+              8.40097856893281, 8.62704140385336, 8.26941027951384, 8.02621498262732, 
+              7.83343176011657, 8.34772572048537, 7.2201117197043, 7.726018848124, 
+              7.54729218946034, 7.54432714141724, 7.07367778819639, 7.43446005674209, 
+              6.99850039936657, 7.17653085977005, 6.54386830827056, 6.30445806040885, 
+              6.41689342324029, 6.75441623215847, 6.62422196552791, 6.75078571309458, 
+              7.05368874583329, 5.8165893358117, 6.78050256316936, 6.48784383891155, 
+              6.81035799933438, 6.294272420428, 6.86630159284875, 6.96421642015475, 
+              7.47622025785761, 7.11732905033786, 7.25441229086079, 7.20877192501211, 
+              6.99417225486996, 7.07476428322854, 7.43427663175926, 7.62638918521399, 
+              6.89327969761881, 7.97125804083893, 7.98871319367195, 8.21524265126087, 
+              8.23105853890487, 8.09831857048211, 8.54931407666646, 8.69429146079085, 
+              8.25220494354943, 8.71943109331319, 8.29725008654376, 8.95429809009838, 
+              8.50931868165305, 8.72615556388004, 8.1262435643024, 8.50620188272689, 
+              8.35041418062732, 8.36644865542879, 8.0045837293909, 7.6469323663865, 
+              7.35145757198905, 8.40837450137013, 7.38750035273986, 7.08151841377227, 
+              7.58614338432199, 7.87842382846757, 7.36470486978931, 7.5172278535716, 
+              7.23604595647883, 6.88656836005198, 7.1220991723514, 6.82517727988075, 
+              6.93345086346623, 6.58789025452084, 6.85914152421638, 6.53045650097147, 
+              6.65105101567572, 6.63172054424419, 6.48203707188496, 6.28658235202193, 
+              6.9535632252857, 6.18525071866791, 6.98552854668362, 7.35626720180712, 
+              7.28943726989141, 6.64452929456764, 6.98756265530336, 7.23272146764443, 
+              6.94469442227293, 7.02058646730982, 7.40775370119868, 7.53678365111865, 
+              7.37567619938764, 7.48799609807221, 7.83334146362391, 8.43552232574713, 
+              7.89533471837699, 7.86903494143068, 8.04872849439188, 7.85191191168271, 
+              8.28290023369364, 8.20216975631745, 8.90752199262884, 8.84285809483282, 
+              8.35654325866892, 8.44721772337695, 7.77958795123389, 8.68149533787379, 
+              8.422383882989, 8.03946236936971, 7.96517829313886, 7.91618802286978, 
+              7.92345892079766, 7.21563808099696, 7.56041604251748, 7.44180745657215, 
+              7.4405953866256, 6.99065520579614, 7.51779110182215, 6.9551531719792, 
+              7.05939374978054, 7.13842671270672, 6.84867189255662, 7.24393446149773, 
+              6.67912554375247, 7.19996075654481, 6.9822961380552, 7.27376754689756, 
+              6.5740610840205, 6.6739037350309, 6.59675293297938, 6.90086212354357, 
+              7.23260660107428, 7.63929426617238, 6.95971650227391, 7.12396345792807, 
+              7.30586931200225, 6.98537796037404, 6.30083670387947, 7.33501107633021, 
+              7.94805182148693, 7.61071187738358, 7.40805364943093, 7.38316449259907, 
+              8.07025716790664, 8.34155103372806, 7.6730334817201, 7.99932015617725, 
+              8.68681218306407, 8.10291589530204, 9.0125388126409, 8.23335725347127, 
+              8.84814888412808, 8.65377566023089, 8.88947760445105, 7.99818746523099, 
+              8.66100038756966, 8.94997451112832, 8.60712187610876, 9.15227671048034, 
+              8.36420644812085, 8.68740513065971, 8.38233287696689, 7.77056455144206, 
+              7.48993649352121, 7.66541477157197, 7.600341812748, 6.81058637115552, 
+              7.40633232233386, 6.84802109014542, 7.40070433930559, 6.49027422972347, 
+              6.64956442753093, 6.91254193538019, 6.44593438737777, 7.42631414561258, 
+              7.0477738651147, 6.80902067242865, 6.32434299420971, 6.63588448896749, 
+              5.96820560257609, 6.91887985029261, 6.71341406927451, 6.91959034570469, 
+              6.7730933218221, 6.79975516976685, 7.07717537372598, 6.43789146186825, 
+              6.92128967463882, 7.33531914582572, 7.50532859638588, 7.33517274682558, 
+              7.51175212329148, 7.53175049963453, 7.34025414486676, 8.03137920368175, 
+              7.05779199292, 8.2499297518208, 8.30336773663147, 7.91125395909396, 
+              8.2951953208968, 8.22129369409082, 8.38703423583749, 8.12030839634595, 
+              8.41015158414966, 8.33876583881275, 9.17679399050946, 8.33203343039816, 
+              7.99852363340376, 8.25760021908031, 8.5343317679985, 8.34690932579229, 
+              8.06874404438665, 8.04053998001702, 8.32064617527091, 7.79421350866818, 
+              7.768236955313, 7.84048618448365, 6.9939516771198, 7.5568959680502, 
+              7.26589455891143, 6.9272704144972, 6.69010151420596, 6.9034073831761, 
+              7.61778575477745, 6.98347940574396, 6.90537718313222, 6.30043135314921, 
+              6.66582699895875, 6.41345811142019, 6.81903440060593, 7.14102534186363, 
+              6.94072505044069, 6.28178035284529, 6.70767967120038, 6.81033268415523, 
+              6.55408041491153, 6.02500640376221, 6.86164320190922, 7.32896999754516, 
+              7.03874177351322, 7.22165072467622, 7.2113103201513, 7.20790646923282, 
+              7.56088350922928, 8.06489760004827, 7.47024451411821, 8.07863378051531, 
+              8.35729453454775, 7.76836659854189, 8.12873301568124, 8.48677204884889, 
+              7.84280026584419, 8.57105576610615, 8.15520922472317, 8.69905042347681, 
+              9.11269342453653, 8.13617202499754, 9.14206322296882, 9.01230494225664, 
+              8.67079130912773, 8.3325601571458, 8.6043459098711, 8.58204006493828, 
+              8.29684862776802, 8.8759673373503, 7.870080915491, 7.85744452123684, 
+              8.01023503861055, 8.18489941688437, 7.64569760794127, 7.12749047816502, 
+              7.36119658779618, 7.03434293910977, 8.18227574030882, 7.61519561091876, 
+              7.37901556535695, 6.51578825781459, 7.05622140869536, 6.78224490484037, 
+              6.22345953455245, 6.30954460844191, 6.46349836527554, 6.82041507759259, 
+              6.23083702481339, 6.11623944281362, 6.70720096284787, 5.84293967086274, 
+              5.92291390383571, 7.00415762181717, 7.23371042385523, 6.57082049549358, 
+              7.18426077590214, 7.50426321545743, 7.13636072149787, 7.33796339613836, 
+              7.81426389960482, 7.47645944982979, 7.18659977668041, 7.73186836680602, 
+              7.3746030008829, 7.64486201564756, 8.26317450758254, 7.70111287387015, 
+              8.50808920539018, 8.51073744689094, 8.29284457936166, 8.37543512083259, 
+              8.43835307480234, 8.00364643971124, 8.54235608850412, 8.6509051441125, 
+              7.81285180780642, 8.71999991653921, 8.09080984664049, 7.88682064775194, 
+              8.39600639249364, 7.59798863838198, 7.39389346162457, 7.87052541102396, 
+              6.86784141269155, 7.515954564054, 7.26935332998733, 7.79294162619272, 
+              7.52198779719988, 7.40939242777852, 8.04214614802242, 6.86705377388084, 
+              6.5923926898828, 6.37222777066044, 6.55945960544163, 6.4442004138653, 
+              6.89615503501658, 6.36170858945573, 6.71436191495675, 7.39550832819456, 
+              6.39483973013048, 6.76237464595313, 6.80711757371524, 6.45653378405959, 
+              6.97538057654413, 6.6985492843057, 6.69613013877084, 6.47334641647524, 
+              7.01749268275991, 7.09915386489913, 6.95299126140891, 7.01576482412926, 
+              6.64066330072766, 6.93765044732862, 7.53933910415509, 7.76970670813998, 
+              7.34413164588661), .Tsp = c(2010, 2019.98076923077, 52), class = "ts")
+```
+
+
+Observation
+```{r}
+p4_decompose <- stats::decompose(p4)
+str(p4_decompose)
+```
+
+Le lissage de moyenne mobile, permet de mieux identifier la tendance d'une série temporelle
+```{r}
+
+plot(p4,col = 'darkgreen', xlab = 'date', ylab= 'prix 4', main = "série temporelle de p4")
+
+```
+
+La série semble stationnaire en variance. la série parait stable, les données peuvent être périodiques, il y a une 
+faible variabilité. La tendance saisonnière semble être triangulaire ( en dent de scie). La nature du signal semble triangulaire. 
+On distingue une saisonnalité. Il y a une forte hausse au premier trimestre de chaque année,  qui peut se traduire par un pic de prix 
+et ensuite une forte baisse en fin d année, là où le prix atteint son niveau le plus bas. 
+ ---> un processus est non stationnaire si ;il n'est pas stable en moyenne, ou parce que sa covariance ne reste pas homogène au cours du temps 
+ 
+```{r}
+adf_test <- adf.test(p4)
+cat("Test de Dickey-Fuller : p-valeur =", adf_test$p.value, "\n")
+if (adf_test$p.value < 0.05) {
+  cat("La série temporelle est stationnaire en moyenne.\n")
+} else {
+  cat("La série temporelle n'est pas stationnaire en moyenne.\n")
+  }
+```
+
+#b) Donner les fonctions d'autocorrelation acf et pacf du processus.
+Donner un estimateur de la densite spectrale du processus. 
+Proposer une decomposition du signal en trend , saisonalite avec la fonction decompose de R.
+Qu'en deduisez vous?# 
+
+ 
+-fonctions d'autocorrélation 
+```{r}
+acf(p4, main ="processus ACF de p4")
+```
+
+
+En observant le corrélogramme de la fonction d'autocoréllation de p4, on peut étudier la stationnarité de la série. 
+le corréllograme produit semblerait être relatif à une série non stationnaire dans la mesure où il apparaît que la 
+fonction d'autocorrélation diminue très lentement. Cela pourrait témoigner d'une forte dépendance entre les observations des prix. 
+en effet, le retard semble être "significatif à partir du 13 eme retard. 
+
+-fonctions autocorrélation partielle 
+```{r}
+pacf(p4, main='processus PACF de p4')
+```
+
+Il s'agit à l'inverse pour la fonction d'auto corrélation partielle de p4,  le corréllograme produit semblerait être relatif à une série stationnaire dans la mesure où il apparaît que la 
+fonction d'autocorrélation diminue rapidement. En effet,  le retard semble être "significatif" à partir du 3 eme retard. 
+
+
+
+Estimateur de la densité spectrale du processus 
+
+```{r}
+spectrum <- spectrum(p4)
+spec <- spec.pgram(p4, spans = c(5, 5), taper = 0.1, plot = FALSE)
+```
+
+
+Tracer le graphique de la densité spectrale
+```{r}
+plot(spec, main = "Estimation de la Densité Spectrale")
+```
+
+la fonction spectrum permet estimer la densité spectrale de P4. 
+```{r}
+spectrum <- spectrum(p4)
+# Trouver l'indice de la fréquence maximale
+index_of_max_frequency <- which.max(spectrum$spec)
+index_of_max_frequency
+
+```
+
+La fréquence correspondant au maximum du spectre
+```{r}
+frequency_at_max <-spectrum$freq[index_of_max_frequency]
+frequency_at_max
+
+```
+
+Afficher le spectre
+```{r}
+
+plot(spectrum$freq, spectrum$spec, type = "l", xlab = "Fréquence", ylab = "Spectre", main = "Spectre de p4")
+# Mettre en surbrillance la fréquence maximale sur le graphique
+abline(v = frequency_at_max, col = "red", lty = 2)
+
+```
+le pic du graphique est la période associé prédominante du spectrum
+
+Proposition d'une décomposition du signal en trend:
+A l'aide de plot(decompose(p4)), on peut distinguer graphiquement les observations, la tendance, la saisonnalité et
+le processus aléatoire de la série temporelle p4. 
+
+```{r}
+decompose(p4)
+plot(decompose(p4))
+
+```
+
+
+La tendance de la série temporelle semble etre fluctuante, les pics des prix atteints convergent environ vers 7.70. Au cours du temps, elle semble décroissante puisque elle passe envirion de 7,55 à 7,40 , soit une diminution d'environ 2%. 
+
+de la saisonnalité :
+la série temporelle p4 semble admettre une saisonnalité. en effet, le graphique semble se repété de façon triangulaire à long terme. 
+
+#c)
+Xt = m + Asin(2 * pi* t/T) + Bcos(2*pi*t/T) + Yt######
+Choisir correctement T
+```{r}
+t <- 1:length(p4)
+f <- frequency(p4)
+T =  f
+#la régression linéaire
+deter1 <- lm(p4 ~ sin(2 * pi * t / T) + cos(2 * pi * t / T))
+summary(deter1)
+plot(deter1)
+#les coefficients estimés
+m <- coef(deter1)[1]
+A <- coef(deter1)[2]
+B <- coef(deter1)[3]
+m
+A
+B
+
+```
+
+Calculer les résidus centrés estimés Zt
+```{r}
+Zt <- residuals(deter1)
+plot(Zt, main = "Graphique des résidus", type = 'l')
+adf.test(Zt)
+
+```
+
+HO : Zt > p-value 
+H1 : Zt ≤ p-value 
+La p-value est faible 0,01 < 0,05 on rejette l'hypothèse H0 , la série semble donc être significative 
+
+```{r}
+kpss.test(Zt)
+```
+
+H0: La série temporelle a une tendance stationnaire autour d'une moyenne constante 
+(elle est stationnaire au niveau).
+H1 :  La série temporelle a une tendance non stationnaire (elle n'est pas stationnaire au niveau)
+0.08554 > 0,05 , on rejette pas H0 , on peut donc considérer que la série a une tendance stationnaire au nv de Zt
+
+```{r}
+pp.test(Zt)
+```
+0,01 < 0,05 , on rejette donc H0, la série n'a pas de racine unitaire. La série est donc stationnaire. 
+
+
+#d) tracer l'acf et le pacf de Zt, est-ce un bruit blanc ? 
+En deduire un ensemble des modeles raisonnables pour Zt Les estimer, 
+tester leur validite. Choisir le meilleur modele.
+
+acf zt:
+```{r}
+acf(Zt, ci.type="ma",main ="processus ACF de Zt")
+pacf(Zt,main="processus PACF de Zt")
+
+```
+
+d'après les 2  corrélogrammes, il y a une décroissance très rapide des auto-corrélations, notamment pour ACF de Zt. 
+Il semblerait qu'il y est un bruit blanc".
+est-ce un bruit blanc ? # un bruit blanc faible est une suite de variable centrées, de variance constante et non 
+corrélés
+
+test Ljung Box ou Q test pour l'autocorrélation 
+```{r}
+Box.test(Zt)
+
+```
+
+test d'auto-corrélation
+H0 : absence d'auto-corrélation 
+H1 : présence d'autocorrélation 
+0,01295< 0,05 on rejette H0,  la série Zt présente donc des autocorrélations significatives. 
+En conclusion , Zt n'admet pas un processus de bruit blanc selon le test Ljung Box puisque Zt admet des auto-corrélations. 
+
+
+ensemble de modèles raisonnables à tester 
+```{r}
+modele <- auto.arima(Zt)
+summary(modele)
+plot(forecast(modele))
+
+```
+
+
+avec la méthode pseudo-vraisemblance gaussienne
+```{r}
+modele1 <- Arima(Zt, order = c(1,0, 2), method = "ML")
+modele1
+ma1.1<- round(0.1133/0.5492, digits=2)
+ma1.1
+ma2.1 <- round(0.0132/0.5486, digits = 2)
+ma2.1
+
+```
+Selon ma2.1  le t de student n'est sont supérieurs à la p-value 0,05 mais celui de ma2.1. Un est significatif mais
+
+pas l'autre. Donc on ne peut  pas retenir ARMA(1,2) admettant un proccesus de bruit blanc. 
+```{r}
+
+modele2 <- Arima(Zt, order = c(0,0, 2), method = "ML")
+modele2
+ma2.1<-round(0.0997/0.0438, digits=2)
+ma2.1
+ma2.2 <- round(0.1003/0.0420, digits=2)
+ma2.2
+```
+
+Selon ma2.1 et ma2.2, les t de student  sont supérieurs à la p-value 0,05. Ils  ne sont 
+pas significatifs donc on peut retenir ARMA(0,2) admettant un proccesus de bruit blanc. 
+```{r}
+
+modele3<-Arima(Zt, order = c(0,0, 3), method = "ML")
+modele3
+m3.1<- round(0.0998/0.0438, digits=2)
+m3.1
+m3.2<-round(0.1012/0.0426,digits=2)
+m3.2
+```
+
+Selon ma3.1 et ma3.2, le t de student n'est sont supérieurs à la p-value 0,05. Ils  ne sont 
+pas significatifs donc on peut retenir ARMA(0,3) admettant un proccesus de bruit blanc. 
+
+Avec la méthode du coin:
+```{r}
+eacf(Zt)
+```
+
+#AR de 1 ou 2, et un ordre MA de 0, 1, ou 2,
+```{r}
+coin1 <- Arima(Zt, order = c(2,0, 0), method = "ML")
+coin1
+coin2 <- Arima(Zt, order = c(2,0, 6), method = "ML")
+coin2
+coin3 <- Arima(Zt, order = c(2,0, 4), method = "ML")
+coin3
+coin4 <- Arima(Zt, order = c(2,0, 7), method = "ML")
+coin4
+
+LB.test(coin1)
+
+```
+
+La p-value du Box-Ljung test est de  0.505 ≥ 0.05.Le résidu issu de l'estimation de Zt par le modèle ARIMA(2,0,0) est donc un bruit blanc.
+
+```{r}
+LB.test(coin2)
+
+```
+La p-value du Box-Ljung test est de  0.131 ≤ 0.05. Le résidu issu de l'estimation de Zt par le modèle ARIMA(2,0,6) n'est donc pas un bruit blanc.
+
+```{r}
+
+LB.test(coin3)
+```
+
+La p-value du Box-Ljung test est de  0.3261 ≤ 0.05. Le résidu issu de l'estimation de Zt par le modèle ARIMA(2,0,4) n'est donc pas un bruit blanc.
+
+```{r}
+
+LB.test(coin4)
+```
+
+La p-value du Box-Ljung test est de 0.6061 ≥ 0.05. #Le résidu issu de l'estimation de Zt par le modèle ARIMA(2,0,7) est donc un bruit blanc.
+
+Le résidu issu de l'estimation de Zt par le modèle ARMA(2,7) est donc un bruit blanc.
+
+
+
+
+predire les valeurs du processus Xt pour le mois de janvier suivant (4 valeurs).
+```{r}
+
+predictions_modele <- predict(modele, n.ahead = 4)
+period_xt <- m+ A*sin(2 * pi * t / T) + B*cos(2 * pi * t / T)
+t4 <- 521:524
+predic_period_xt <- m+ A*sin(2 * pi * t4 / T) + B*cos(2 * pi * t4 / T)
+(predictions_Xt <- predic_period_xt + predictions_modele$pred)
+```
+
+
+
+
+# f) Avec la fonction auto.arima
+```{r}
+auto_zt <- auto.arima(Zt)
+auto_zt
+ma_zt1<-round(0.0988/0.0437, digits = 2)
+ma_zt2<-round(0.0948/0.0436, digits = 2)
+ma_zt1
+ma_zt2
+
+```
+
+Selon ma2.1 et ma2.2, les t de student  sont supérieurs à la p-value 0,05. Ils  ne sont 
+pas significatifs donc on peut retenir ARMA(2,0,0) admettant un proccesus de bruit blanc. 
+
+Selon auto_zt, le meilleur modèle pour estimer Zt est un ARMA(2,0,0).
+```{r}
+LB.test(auto_zt)
+```
+
+La p-value du Box-Ljung test est de 0.505 \> 0.05. Le résidu issu de l'estimation de Zt par le modèle ARMA(2,0) n'est pas un bruit blanc.
+
+#g)
+Appliquer un opérateur (1- B^52) aux données Xt et proposer un modèle adéquat de type ARMA. 
+En déduire les prédictions du mois de janvier avec ce modèle et les intervalles de confiance associés.
+
+- Appliquer l'opérateur (1 - B^52) 
+```{r}
+
+diff_p4 <- diff(p4, lag = 52) 
+diff_arma <- auto.arima(diff_p4,seasonal= FALSE)
+diff_arma
+forecast_values_diff_p4 <- forecast(diff_arma, h = 4)
+forecast_values_diff_p4
+```
+
+
+```{r}
+predictions_modele2 <- predict(diff_arma,  n.ahead = 4)
+period_xt2 <- m+ A*sin(2 * pi * t / T) + B*cos(2 * pi * t / T)
+t4 <- 521:524
+predic_period_xt2 <- m+ A*sin(2 * pi * t4 / T) + B*cos(2 * pi * t4 / T)
+(predictions_Xt2 <- predic_period_xt2 + predictions_modele2$pred)
+
+```
+Les semaines du mois de janvier sont donc incluent dans l'intervalle de confiance à 95%. 
+ de plus, on prédit les futurs prix soient [1] 7.901592 8.006302 8.100053 8.184561. 
+
+
+
+
+
+
+
