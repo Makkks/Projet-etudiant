@@ -1,0 +1,1 @@
+Projet en " data lakes" en extrayant des données via une API, utilisation de Pyspark pour manipuler nos données avec python et l'orchestration des scripts via Airflow
