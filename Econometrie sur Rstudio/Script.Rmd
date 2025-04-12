@@ -1,0 +1,1318 @@
+---
+title: "Facteurs et déterminants de l'innovation : le cas du Pakistan"
+author: "M2 D3S - Fernandes Thomas, Genet Maxence, Laetitia Rahanitriniaina, Vignon Marcias Gibra Vignigbe"
+date: "29/12/2024"
+output: rmdformats::"readthedown"
+---
+
+# Cahier des charges (section à supprimer dans le document final)
+
+
+
+## Organisation du travail
+
+L'objectif de ce travail est de développer une analyse empirique sur une thématique/problématique en économie de l'innovation. Dans la perspective des travaux menés par l'OCDE/Banque Mondiale, ce travail sera mené selon une double perspective :
+
+1. Perspective "globale" : consistant à agréger les informations issues de pays différents pour répondre à la question posée
+2/ Perspective "pays" : consistant à ne mobiliser les données que d'un seul pays pour répondre à la même question.
+
+Chaque groupe devra donc identifier une question pertinente puis à partir de cette question, mener l'analyse globale et l'analyse pays
+
+Pour l'analyse-pays, chaque groupe s'intéressera à un pays en particulier tel que défini ci-dessous :
+
+* Groupe 1 (Pakistan, 2013) : < à compléter >
+* Groupe 2 (Inde, 2014) : < à compléter >
+* Groupe 3 (Nepal, 2013) : < à compléter >
+* Groupe 4 (Bangladesh, 2013) : < à compléter >
+
+Remarques importantes :
+
+1. Comme toute source de données, ces données présentent des limites. En particulier, les mêmes questions ne sont pas posées dans tous les pays, posées de la même façon. Certaines questions sont peu ou mal renseignées. Avant d'aller trop loin, il faut donc réfléchir à une hypothèse de recherche qui prenne en considération ces questions.
+
+2. Pour mener l'analyse globale, un travail préalable de fusion des quatre BDD est nécessaire. A votre convenance, ce travail pourra être réalisé de façon collaborative (inter-groupes) mais ce travail collaboratif devra être doublé d'un travail mené par chaque groupe pour s'assurer que les données générées sont cohérentes et répondent bien à la problématique de chaque groupe.
+
+Chaque groupe devra développer les éléments suivants tels qu'indiqués ci-dessous :
+
+* Introduction, littérature et hypothèses de recherche
+* Présentation et visualisation des données
+* Analyse économétrique ('baseline')
+* Tests de robustesse
+* Discussion et conclusion
+
+Chaque section devra être complétée et entièrement rédigée. Vous pouvez rédiger le rapport en français ou anglais, à votre convenance. Un bonus sera accordé aux documents rédigés en anglais.
+
+Chaque élément (**tableau, figure, graphique**) doit être numéroté et légendé. Dans le texte, il faut appeler l'élément au moment où sa lecture le justifie ("cf. Tableau 4").
+
+Les **références bibliographiques** doivent figurer par un appel dans le texte ainsi qu'un ajout dans la liste des références. Par exemple, dans le texte :
+
+*Le cahier des charges définissant l'ensemble des consignes à respecter pour ce projet sont précisées par Darmon (2024).*
+
+L'article doit est ensuite référencé dans la Section "Références bibliographiques" (cf. Section Références bibliographiques de ce document).
+
+Les références bibliographiques doivent figurer par ordre alphabétique. Le principe d'une référence bibliographique est de permettre au lecteur de retrouver rapidement une référence. Elle doit donc indiquer toutes les informations (nom de l'auteur, article, revue ou journal) pour y accéder. Dans le cas de sources internet, le nom du site doit figurer, l'adresse complète de la page ainsi que la date de consultation ("dernière consultation le 01/02/2021")
+
+Cf. Section 'Références biblio' de ce document. Plus généralement, vous pourrez vous fonder sur l'article de recherche proposé à l'examen pour formater votre bibliographie.
+
+## Reproductibilité des résultats
+
+Le principe général est que vos **résultats soient reproductibles**. Autrement dit, que le lecteur soit capable de reproduire vos résultats (éventuellement de modifier certains éléments de votre code pour réaliser des calculs complémentaires s'il le souhaite).
+
+Pour cette raison, le code R permettant de faire les calculs (recodage de la base, statistiques descriptives, estimations économétriques) sera inclus directement dans le présent fichier. La syntaxe permettant de réaliser cela est indiquée dans les sections concernées.
+
+Lors de l'évaluation de votre travail, ce fichier sera "knitté" à partir de RStudio. Le format d'output de RStudio utilisé sera l'HTML.
+
+## Critères d'évaluation
+
+* Délimiter un thème pertinent et formuler une hypothèse de recherche pertinente
+* Appuyer cette hypothèse par d'autres articles de recherche et-ou par un raisonnement économique
+* Savoir mobiliser un ou des modèles économétriques pertinents et savoir interpréter les résultats de ces modèles
+* Prendre du recul sur ses résultats (savoir mobiliser différents tests de robustesse, évaluer la portée et la qualité de ses résultats d'un point de vue économique et statistique)
+* Rédiger votre rapport de façon claire et précise
+
+Vous n'êtes **PAS** évalué sur...
+
+* Le degré de significativité de vos résultats
+* La validation ou la non-validation de vos hypothèses de recherche
+
+
+## Fichiers à déposer
+
+
+  
+* **Structure et envoi des fichiers** : afin de pouvoir évaluer le code à partir de n'importe quel ordinateur, il vous est demandé de respecter les consignes suivantes :
+  * Sur votre ordinateur, vous travaillerez dans le répertoire *C:/innovproject/paysDate* (appelé "répertoire-racine"). Par exemple, le groupe travaillant sur la BDD Inde de l'année 2014 travaillera dans le répertoire *C:\\innovproject\inde2014*). Vous travaillerez uniquement dans ce document et aucun autre document ne devra figurer **en dehors** de ce répertoire. Le contenu de ce répertoire sera envoyé sous la forme d'un fichier unique en format compressé (ZIP).
+  * Ce fichier devra être téléversé à l'aide d'un lien (indiqué dans un mail qui vous sera envoyé ultérieurement).  
+
+* **Contenu des fichiers**
+  * La base de données d'origine importée sous R figurera dans le dossier racine sous le nom (e.g. india2014.Rdata). Si vous devez retravailler cette base de données (recodage par exemple), votre code R devra importer la  base de données, la renommer d'après son nom d'origine suivi de 'bis' (e.g. india2014bis).
+  * Le document RMarkdown ( = ce document complété)
+
+
+La fin de ce document contient le canevas du document attendu ainsi que différentes consignes. Vous êtes autorisés à vous départir de ces consignes et faire preuve d'innovation si vous estimez que cela permet de mieux remplir les critères d'évaluation. 
+
+
+# Introduction, litterature et hypothèses de recherche
+
+L'innovation joue un rôle central dans le développement économique et la croissance des entreprises, comme l'illustre Aghion et Howitt (1992). Pourtant, une grande partie de la recherche sur les déterminants de l'innovation s'est concentrée sur les pays développés, laissant de côté les économies en rattrapage technologique. Cette étude cherche à combler cette lacune en examinant les déterminants de l'innovation dans le contexte du Pakistan et en le comparant à d'autres pays d'Asie du Sud (Inde, Bangladesh et Népal). Ce focus régional est particulièrement pertinent, car l'Asie du Sud est marquée par une croissance économique rapide, mais aussi par des disparités importantes en matière de capacité d'innovation.
+
+L'intérêt de se concentrer sur le Pakistan réside dans sa position stratégique en tant qu'économie émergente avec un potentiel important pour accélérer son innovation. Alors que les travaux comme de QURESHI et al. (2020) soulignent que l'Asie-Pacifique dans son ensemble a surpassé d'autres régions, notamment l'Amérique latine et les Caraïbes, en matière d'investissements en R&D et de production de brevets, le Pakistan offre une perspective intéressante pour analyser des facteurs spécifiques dans un contexte national. En outre, comparer les déterminants de l'innovation du Pakistan à ceux d'autres pays d'Asie du Sud permet d'identifier les éléments structurels communs et les divergences qui peuvent enrichir les politiques publiques et les stratégies entrepreneuriales.
+
+Plusieurs travaux offrent un cadre théorique et empirique utile pour analyser ces déterminants. ROMER (1990) souligne l'importance des investissements en capital humain et en R&D dans la génération de changement technologique endogène, un mécanisme clé pour les économies en rattrapage technologique. STERN, PORTER et FURMAN (2000) mettent en lumière les facteurs institutionnels et structurels qui influencent les capacités nationales d'innovation, des éléments qui peuvent varier significativement entre pays d'Asie du Sud. ULKU (2004) examine les relations entre dépenses en R&D et innovation, proposant des insights applicables à la fois aux économies avancées et émergentes. Enfin CRESPI et ZUÑIGA (2010) montrent comment l'innovation influence la productivité dans des économies en développement, offrant une base comparative pertinente pour évaluer les dynamiques similaires en Asie du Sud. Ces études fournissent des points de référence précieux pour explorer comment le Pakistan, en interaction avec ses voisins régionaux, pourrait renforcer ses capacités d'innovation et accélérer sa croissance économique.
+
+L'hypothèse de recherche que nous allons tester est la suivante : la probabilité qu'une entreprise innove dépend positivement de sa taille, de ses investissements en R&D, de sa stratégie marketing, de la formation de ses employés, du secteur d'activité, et de la présence d'aides gouvernementales.
+
+# Présentation et visualisation des données
+
+## Présentation succincte des données utilisées
+
+Notre étude porte sur l'Enterprise Survey 2013 et l'Innovation Follow-up Survey du Pakistan qui est une enquête à l'initiative de la banque mondiale.
+
+### WORD BANK ENTERPRISE SURVEY (WBES)
+
+La banque mondiale lance depuis 2006 des enquêtes sur les entreprises du secteur privé. Ce sont des études réalisées auprès des responsables et propriétaires d'entreprises dans plus de 150 économies différentes. Ces enquêtes fournissent des informations sur divers aspects de l'environnement commercial, notamment l'accès au financement, la corruption, les infrastructures et la performance des entreprises. Leurs objectifs est de faciliter les comparaisons entre pays.
+
+### THE WORLD BANK INNOVATION FOLLOW-UP
+
+Les Enterprise Survey 2013 et Innovation Follow-up Survey font partie des initiatives liées aux World Bank Enterprise Surveys (WBES), réalisées sur la période 2011-2014. Ces enquêtes de suivi, complémentaires à l'enquête standard, visent à améliorer la mesure de l'innovation dans les économies émergentes. Elles ont été lancées par la Banque mondiale en collaboration avec le Département international de développement.
+
+Au cours de cette période, 19 pays d'Afrique et d'Asie du Sud, comme le Pakistan (déjà inclus dans l'enquête standard sur les entreprises), ont fait l'objet d'une enquête utilisant le module d'innovation.
+
+Les questionnaires de suivi avaient pour objectifs :
+- D'apporter des éléments factuels permettant de rendre plus concrètes les analyses sur la nature, les déterminants et le rôle de l'innovation dans les pays en développement et émergents.
+- De produire des données exploitables pour identifier des projets et définir des leviers susceptibles de promouvoir l'innovation.
+- D'encourager un dialogue politique structuré sur le rôle central de l'innovation dans le développement du secteur privé et la croissance économique à l'échelle mondiale.
+
+Pour l'enquête standard, un échantillonnage aléatoire stratifié a été utilisé pour sélectionner les entreprises interrogées. Les données ont été recueillies au moyen d'entretiens en face à face.
+
+---
+
+Échantillonnage stratifié : Cette technique consiste à diviser la population totale en strates homogènes (groupes) selon une ou plusieurs caractéristiques communes (par exemple, l'âge, le genre, la localisation géographique, etc.). Ensuite, un échantillon aléatoire est prélevé dans chaque strate, soit proportionnellement à la taille de cette dernière, soit selon une méthode prédéfinie.
+
+---
+
+Pour l'enquête de suivi, 75 % des entreprises interrogées dans l'enquête standard ont été sélectionnées aléatoirement.
+
+## Description des données
+
+L'ensemble de données fusionné, désigné sous le nom de `merged_data`, comprend 5 649 observations et 11 variables. Ces données englobent quatre pays d'Asie du Sud : le Pakistan, l'Inde, le Bangladesh et le Népal. L'objectif principal de cette étude est d'analyser les déterminants de l'innovation dans ces économies émergentes en s'appuyant sur les enquêtes de la Banque mondiale, à savoir l'Enterprise Survey 2013 et l'Innovation Follow-up Survey du Pakistan.
+
+### Variables d'intérêt et statistiques descriptives
+
+Les variables sélectionnées pour cette analyse économétrique sont détaillées ci-dessous, accompagnées de leurs statistiques descriptives pertinentes.
+
+#### Taille de l'entreprise (**a6a**)
+
+La variable **a6a** catégorise la taille de l'entreprise en quatre classes : Micro, Small, Medium et Large. Cette information est recueillie au début de l'entretien.
+
+#### Secteur d'activité (**ha0**)
+
+La variable **ha0** classe les entreprises en deux secteurs principaux : Manufacturing et Services. Cette classification est également contrôlée au début de l'entretien.
+
+#### Marketing (**he2a**)
+
+La variable **he2a** indique si l'entreprise a fait appel à des services de marketing, d'études de consommation ou de publicité, avec les réponses possibles : Yes, No, Non renseigné. Elle répond à la question : *"Au cours des exercices 2009/2010 à 2011/2012, cet établissement a-t-il fait appel aux services d'une société de marketing, d'une société d'études de consommation ou d'une société de publicité ?"*
+
+#### Formation des salariés (**hf3a**)
+
+La variable **hf3a** évalue si l'entreprise a dispensé une formation formelle à ses employés pour le développement ou l'introduction de produits ou services innovants, avec les réponses : Yes, No, Non renseigné. Elle répond à la question : *"Au cours des exercices 2009/2010 à 2011/2012, cet établissement a-t-il dispensé une formation formelle à l'un ou l'autre de ses employés en vue du développement et/ou de l'introduction de produits ou de services novateurs ?"*
+
+#### Source d'information pour l'innovation (**hf6**)
+
+La variable **hf6** identifie les sources d'information utilisées par l'entreprise pour innover. Initialement comportant 12 modalités (In-house R&D, Recent hires, Parent/firm knowledge, Suppliers, Consultants, Associations, Journals, Market products, Government, Universities, Internet, Customer feedback), ces modalités ont été regroupées en **source interne** (In-house R&D, Recent hires, Parent/firm knowledge, Customer feedback) et **source externe**.
+
+#### Aide non financière pour l'innovation (**hf8**)
+
+La variable **hf8** indique si l'entreprise a reçu une aide non financière du gouvernement pour des activités liées à l'innovation, incluant la formation à l'utilisation d'équipements d'innovation, l'assistance à la R&D de produits, ainsi que l'assistance et la formation à la commercialisation des innovations. Elle répond à la question : *"Au cours des exercices 2009/2010 à 2011/2012, cet établissement a-t-il reçu une aide non financière du gouvernement pour des activités liées à l'innovation ?"*
+
+#### Investissements en R&D (**hf1a**)
+
+La variable **hf1a** mesure si l'entreprise a mené des activités de recherche et développement internes, avec les réponses : Yes, No, Non renseigné. Elle répond à la question : *"Au cours des exercices 2009/2010 à 2011/2012, cet établissement a-t-il mené des activités de R&D internes ?"*
+
+#### Innovation produits/services (**hb1**)
+
+La variable **hb1** indique si l'entreprise a lancé un produit ou un service innovant au cours des exercices 2009/2010 à 2011/2012, avec les réponses : Yes, No, Non renseigné. Elle répond à la question : *"Au cours des exercices 2009/2010 à 2011/2012, l'établissement a-t-il lancé un produit ou un service innovant ?"*
+
+#### Innovation méthodes de production (**hc1**)
+
+La variable **hc1** mesure si l'entreprise a introduit des méthodes de production ou d'offres de services innovantes au cours des exercices 2009/2010 à 2011/2012, avec les réponses : Yes, No, Non renseigné. Elle répond à la question : *"Au cours des exercices 2009/2010 à 2011/2012, l'établissement a-t-il introduit des méthodes innovantes de fabrication de produits ou d'offre de services ?"*
+
+
+```{r, message=FALSE, include=FALSE}
+library(tidyverse)
+library(haven)
+library(skimr)
+library(Hmisc)
+library(psych)
+library(car)
+library(kableExtra)
+library(vcd)
+library(FactoMineR)
+library(factoextra)
+library(MASS)
+library(nnet)
+library(GGally)
+library(margins)
+library(pROC)
+
+# Le projet est organisé dans le répertoire racine "C:/innovproject/pakistan2013". Voici son arborescence.
+# innovproject:.
+# └───Pakistan2013
+#     │   Script.html
+#     │   Script.Rmd
+#     │
+#     ├───BDD
+#     │       Bangladesh_2013.dta
+#     │       India_2014.dta
+#     │       Nepal_2013.dta
+#     │       Nepal_2013_expanded.dta
+#     │       Pakistan_2013.dta
+#     │
+#     └───Literature
+#             A Model of Growth through Creative Destruction.pdf
+#             Innovation-and-Productivity-Evidence-from-Six-Latin-American-Countries.pdf
+#             R&D, Innovation, and Economic Growth An Empirical Analysis.pdf
+#             Romer_1990.pdf
+#             The Determinants of National Innovative Capacity.pdf
+#             Trends and determinants of innovation in Asia-Pacific and Latin America and the Caribbean.pdf
+```
+
+```{r, include=FALSE}
+data_files <- list(
+  Bangladesh = "BDD/Bangladesh_2013.dta",
+  India_v11  = "BDD/India_2014.dta",
+  Pakistan   = "BDD/Pakistan_2013.dta"
+)
+
+###############################################################################
+# Fonction : clean_data
+# -----------------------------------------------------------------------------
+# Description : nettoie et formate un data frame selon les règles suivantes :
+#   - Convertit toutes les variables ('labelled') en numérique
+#   - Remplace les chaînes de caractères vides par NA
+#   - Ajoute une colonne 'country'
+#   - Sélectionne notre sous-ensemble de variables d'intérêt
+###############################################################################
+clean_data <- function(df, country_name = NULL) {
+  df %>%
+    mutate(
+      across(where(is.labelled),  ~as.numeric(as.character(.))),
+      across(where(is.character), ~na_if(., "")),
+      country = country_name
+    ) %>%
+    dplyr::select(any_of(c(
+      "a6a",  # Taille de l'entreprise
+      "he2a", # Marketing
+      "hf3a", # Formation des salariés
+      "hf8",  # Aide non financière pour innovation
+      "hf6",  # Source d'information pour innovation
+      "hf1a", # R&D
+      "hb1",  # Innovation produits/services
+      "hc1",  # Innovation méthodes de production
+      "ha0",  # Secteur
+      "idstd", # Identifiant
+      "country" # Pays
+    )))
+}
+
+# Mappage de la fonction clean_data à chaque fichier
+main_data <- data_files %>%
+  map2_df(
+    .y = names(.),
+    ~ read_dta(.x) %>%
+      clean_data(country_name = .y)
+  )
+
+###############################################################################
+# Gestion du Népal
+#------------------------------------------------------------------------------
+# Le fichier principal ne contient pas les questions commençant par "a". On les
+# récupères depuis le fichier étendu en faisant la jointure sur l'id
+###############################################################################
+nepal_data <- read_dta("BDD/Nepal_2013.dta") %>%
+  clean_data() %>%
+  left_join(
+    read_dta("BDD/Nepal_2013_expanded.dta") %>%
+      dplyr::select(idstd, a6a),
+    by = "idstd"
+  ) %>%
+  mutate(country = "Nepal")
+
+merged_data <- bind_rows(
+  main_data,
+  nepal_data
+)
+```
+
+```{r, echo=FALSE}
+# ==============================================================================
+# Analyse descriptive initiale
+# ==============================================================================
+
+# Vue d'ensemble des données
+skim(merged_data)
+
+# Comptage des modalités uniques par variable
+unique_modalities <- apply(merged_data, 2, unique)
+result <- data.frame(
+  Variable = colnames(merged_data),
+  Nombre_Uniques = sapply(unique_modalities, length),
+  Modalites_Uniques = sapply(unique_modalities, function(x) paste(x, collapse = ", "))
+)
+
+# Tableaux de fréquences pour toutes les variables (sauf idstd)
+merged_data_table_list <- merged_data %>% 
+  dplyr::select(-idstd)
+table_list <- lapply(merged_data_table_list, table)
+```
+
+```{r, echo=FALSE}
+# ==============================================================================
+# Analyse par pays
+# ==============================================================================
+
+# Création des sous-ensembles par pays
+pays_data <- list(
+  Bangladesh = merged_data %>% filter(country == "Bangladesh") %>% dplyr::select(-idstd),
+  India = merged_data %>% filter(country == "India_v11") %>% dplyr::select(-idstd),
+  Nepal = merged_data %>% filter(country == "Nepal") %>% dplyr::select(-idstd),
+  Pakistan = merged_data %>% filter(country == "Pakistan") %>% dplyr::select(-idstd)
+)
+
+# Tableaux de fréquences par pays
+pays_tables <- lapply(pays_data, function(x) lapply(x, table))
+```
+
+```{r, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+# ==============================================================================
+# Analyse par pays - Chunk d'affichage Tableaux
+# ==============================================================================
+
+variable_labels <- c(
+  "a6a"   = "Taille de l'entreprise",
+  "he2a"  = "Marketing",
+  "hf3a"  = "Formation des salariés",
+  "hf8"   = "Aide non financière pour innovation",
+  "hf6"   = "Source d'information pour innovation",
+  "hf1a"  = "R&D",
+  "hb1"   = "Innovation produits/services",
+  "hc1"   = "Innovation méthodes de production",
+  "ha0"   = "Secteur"
+)
+
+# Définition des niveaux et labels spécifiques pour chaque variable
+variable_levels_labels <- list(
+  a6a = list(
+    levels = 0:3,
+    labels = c("Micro", "Small", "Medium", "Large")
+  ),
+  he2a = list(
+    levels = c(2, 1, -9),
+    labels = c("No", "Yes", "Non renseigné")
+  ),
+  hf3a = list(
+    levels = c(2, 1, -9),
+    labels = c("No", "Yes", "Non renseigné")
+  ),
+  hf8 = list(
+    levels = c(2, 1, -9),
+    labels = c("No", "Yes", "Non renseigné")
+  ),
+  hf6 = list(
+    levels = 1:12,
+    labels = c(
+      "In-house R&D", "Recent hires", "Parent/firm knowledge",
+      "Suppliers", "Consultants", "Associations",
+      "Journals", "Market products", "Government",
+      "Universities", "Internet", "Customer feedback"
+    )
+  ),
+  hf1a = list(
+    levels = c(2, 1, -9),
+    labels = c("No", "Yes", "Non renseigné")
+  ),
+  hb1 = list(
+    levels = c(2, 1, -9),
+    labels = c("No", "Yes", "Non renseigné")
+  ),
+  hc1 = list(
+    levels = c(2, 1, -9),
+    labels = c("No", "Yes", "Non renseigné")
+  ),
+  ha0 = list(
+    levels = 1:2,
+    labels = c("Manufacturing", "Services")
+  )
+)
+
+# Fonction pour créer les tableaux avec étiquettes des modalités
+create_variable_table <- function(pays_data, variable_name, labels, levels_labels) {
+  # Récupérer les niveaux et labels spécifiques à la variable
+  var_info <- levels_labels[[variable_name]]
+  if (is.null(var_info)) {
+    stop(paste("Aucun niveau/label défini pour la variable", variable_name))
+  }
+  var_levels <- var_info$levels
+  var_labels <- var_info$labels
+  
+  # Créer une liste de tables de fréquence en convertissant chaque variable en facteur
+  freq_tables <- lapply(pays_data, function(df) {
+    if (!variable_name %in% names(df)) {
+      stop(paste("La variable", variable_name, "n'est pas trouvée dans le data frame du pays:", deparse(substitute(df))))
+    }
+    # Convertir la variable en facteur avec les niveaux et labels spécifiés
+    df[[variable_name]] <- factor(df[[variable_name]],
+                                 levels = var_levels,
+                                 labels = var_labels)
+    var <- as.character(df[[variable_name]])
+    var <- str_trim(var)
+    table(var, useNA = "ifany")
+  })
+  
+  # Collecter toutes les modalités uniques
+  all_levels <- sort(unique(unlist(lapply(freq_tables, names))))
+  
+  # Initialiser le data frame résultat
+  result_df <- data.frame(Modalite = all_levels, stringsAsFactors = FALSE)
+  
+  # Ajouter les fréquences pour chaque pays
+  for(pays in names(freq_tables)) {
+    freq <- freq_tables[[pays]]
+    result_df[[pays]] <- 0
+    indices <- match(names(freq), result_df$Modalite)
+    
+    if(any(is.na(indices))) {
+      warning(paste("Certaines modalités de", pays, "ne sont pas trouvées dans 'Modalite'. Elles seront ignorées."))
+      valid <- !is.na(indices)
+      indices <- indices[valid]
+      freq <- freq[valid]
+    }
+    
+    result_df[indices, pays] <- freq
+  }
+  
+  # Ajouter la colonne Total
+  result_df$Total <- rowSums(result_df[, names(freq_tables), drop = FALSE])
+  
+  # Ajouter les colonnes de pourcentage
+  for(pays in names(freq_tables)) {
+    col_name <- paste0(pays, " (%)")
+    total_pays <- sum(result_df[[pays]], na.rm = TRUE)
+    if(total_pays == 0) {
+      result_df[[col_name]] <- NA
+    } else {
+      result_df[[col_name]] <- round(result_df[[pays]] / total_pays * 100, 1)
+    }
+  }
+  
+  # Ajouter les codes numériques aux étiquettes dans 'Modalite'
+  result_df$Modalite <- sapply(result_df$Modalite, function(x) {
+    # Trouver le code correspondant à l'étiquette
+    code <- var_levels[which(var_labels == x)]
+    if(length(code) == 1) {
+      paste0(x, " : ", code)
+    } else {
+      # Si aucune correspondance unique, retourner l'étiquette seule
+      x
+    }
+  })
+  
+  # Réorganiser les colonnes
+  col_order <- c()
+  for(pays in names(freq_tables)) {
+    col_order <- c(col_order, pays, paste0(pays, " (%)"))
+  }
+  col_order <- c("Modalite", col_order, "Total")
+  result_df <- result_df[, col_order]
+  
+  # Récupérer le label de la variable
+  variable_label <- labels[variable_name]
+  
+  # Créer le tableau avec kable
+  kable_table <- result_df %>%
+    kbl(caption = paste0("Distribution de la variable ", variable_name, " : ", variable_label),
+        format = "html",
+        align = "l") %>%
+    kable_classic(full_width = FALSE) %>%
+    column_spec(1, bold = TRUE) %>%
+    add_header_above(c(" " = 1, 
+                       "Bangladesh" = 2, 
+                       "India" = 2, 
+                       "Nepal" = 2, 
+                       "Pakistan" = 2,
+                       " " = 1)) %>%
+    row_spec(0, bold = TRUE, color = "white", background = "#9f2042")
+  
+  return(kable_table)
+}
+
+# Liste des variables à traiter
+variables <- c("a6a", "he2a", "hf3a", "hf8", "hf6", "hf1a", "hb1", "hc1", "ha0")
+
+# Génération des tableaux avec les étiquettes des modalités
+tables_list <- lapply(variables, function(var) {
+  create_variable_table(pays_data, var, variable_labels, variable_levels_labels)
+})
+
+# Affichage des tableaux
+tables_list
+```
+
+Les analyses descriptives des variables clés révèlent des dynamiques variées entre les quatre pays d'Asie du Sud étudiés, à savoir le Bangladesh, l'Inde, le Bangladesh et le Népal. En ce qui concerne la taille des entreprises (a6a), les petites et moyennes entreprises prédominent dans tous les pays. Toutefois, le Bangladesh et l'Inde se distinguent par une proportion notable de grandes entreprises, représentant respectivement 28,2% et 26,7% de leur parc entrepreneurial, contre 19,8% au Pakistan et seulement 13% au Népal.
+
+L'analyse sectorielle (ha0) montre une prédominance du secteur manufacturier en Inde (78%) et au Pakistan (83,8%), tandis que le Bangladesh suit de près avec 86,4% des entreprises actives dans la manufacture. En revanche, le Népal présente une répartition équilibrée entre les secteurs des services (50,1%) et de la manufacture (49,9%), suggérant une diversification sectorielle qui pourrait influencer différemment les capacités d'innovation.
+
+Les données relatives au marketing (he2a) et à la formation des salariés (hf3a) illustrent des disparités notables entre les pays. L'Inde et le Népal montrent des taux plus élevés d'utilisation des services de marketing, avec 22,4% et 30,8% des entreprises y ayant recours respectivement, comparativement à 9,6% au Bangladesh et 13,4% au Pakistan. De même, l'Inde se distingue par un engagement plus marqué dans la formation des employés (46,9%) par rapport aux autres pays, où les taux varient entre 23,1% au Népal et 35,3% au Bangladesh.
+
+En matière de recherche et développement (R&D) (hf1a) et de support non financier pour l'innovation (hf8), l'Inde affiche des performances supérieures avec 46,2% des entreprises engagées dans des activités de R&D internes et 23,8% bénéficiant de soutiens non financiers gouvernementaux. En comparaison, le Pakistan et le Népal présentent des taux plus bas, avec respectivement 9,3% et 10,4% des entreprises investissant en R&D, et moins de 3% recevant des aides non financières. Le Bangladesh, bien qu'ayant un taux de R&D interne plus élevé que le Pakistan et le Népal (24,9%), reste en deçà de l'Inde.
+
+Les résultats concernant l'innovation en produits/services (hb1) et les méthodes de production (hc1) confirment ces disparités. Le Bangladesh et l'Inde enregistrent des taux élevés d'introduction de nouveaux produits ou services (63,4% et 65,1% respectivement) ainsi que des innovations dans les méthodes de production (73,5% et 60,5%). En revanche, le Népal et le Pakistan présentent des taux nettement inférieurs, avec seulement 17,2% et 22,7% des entreprises innovantes en produits/services, et 13,8% et 9,1% pour les méthodes de production.
+
+Enfin, la source d'information pour l'innovation (hf6) révèle une préférence marquée pour les sources internes telles que le R&D interne et les retours clients, particulièrement au Bangladesh et en Inde.
+
+En somme, les analyses des distributions des variables clés révèlent une prédominance générale des petites et moyennes entreprises dans les quatre pays d'Asie du Sud, soulignant une structure entrepreneuriale similaire. Toutefois, des différences marquées émergent en matière de capacités d'innovation et de soutien institutionnel, avec l'Inde et le Bangladesh affichant des niveaux plus élevés d'investissements en R&D et d'activités innovantes, soutenus par des politiques gouvernementales proactives. En revanche, le Pakistan se distingue par des lacunes significatives dans ces domaines, notamment une faible proportion d'entreprises investissant en R&D interne (9,3%) et bénéficiant de soutiens non financiers gouvernementaux (2,3%). De plus, les taux d'innovation en produits/services et en méthodes de production sont nettement inférieurs par rapport à ses voisins régionaux, ce qui pourrait limiter son potentiel d'innovation.
+
+```{r, include=FALSE}
+# ==============================================================================
+# Traitement des valeurs manquantes
+# ==============================================================================
+
+# 1. Remplacement des NA dans hf8 par -9
+merged_data <- merged_data %>%
+  mutate(hf8 = replace_na(hf8, -9))
+
+# Vérification après modification
+table(merged_data$hf8)
+```
+
+```{r, include=FALSE}
+# ==============================================================================
+# Recodage des variables
+# ==============================================================================
+
+# 1. Recodage de hf6 (sources d'innovation)
+# Sources internes : 1, 2, 3, 12
+# Sources externes : 4, 5, 6, 7, 8, 9, 10, 11
+merged_data <- merged_data %>%
+  mutate(
+    hf6 = case_when(
+      hf6 %in% c(1, 2, 3, 12) ~ 1,  # Sources internes
+      hf6 %in% c(4:11) ~ 2,         # Sources externes
+      hf6 == -9 ~ 2                 # Valeurs manquantes -> externes
+    )
+  )
+
+# Comptage initial
+initial_count <- merged_data %>%
+  filter(hb1 == 2, ha0 == 2, country == "India_v11") %>%
+  nrow()
+
+print(paste("Nombre initial d'observations:", initial_count))
+
+
+# 2. Redistribution des valeurs -9 proportionnellement par pays
+# redistribute_negative_by_group <- function(data, group_var, cols_to_adjust) {
+#   data %>%
+#     group_by(across(all_of(group_var))) %>% 
+#     mutate(across(
+#       .cols = all_of(cols_to_adjust),
+#       .fns = ~ {
+#         if (!is.numeric(.)) stop("La colonne doit être numérique.")
+#         
+#         # Identifier les indices des valeurs manquantes
+#         missing_indices <- which(. == -9)
+#         valid_values <- .[. != -9]
+#         negative_values <- length(missing_indices)
+#         
+#         if (negative_values > 0 && length(valid_values) > 0) {
+#           freq_table <- table(valid_values)
+#           proportions <- freq_table / sum(freq_table)
+#           redistribution <- round(proportions * negative_values)
+#           
+#           # Créer un vecteur des nouvelles valeurs à ajouter
+#           new_values <- rep(as.numeric(names(redistribution)), redistribution)
+#           
+#           # Assigner les nouvelles valeurs aux indices manquants
+#           if (length(new_values) >= negative_values) {
+#             .[missing_indices] <- new_values[1:negative_values]
+#           } else {
+#             .[missing_indices] <- sample(as.numeric(names(redistribution)), negative_values, replace = TRUE, prob = proportions)
+#           }
+#         }
+#         
+#         return(.)
+#       },
+#       .names = "{.col}"
+#     )) %>%
+#     ungroup()
+# }
+# 
+# # Application de la redistribution
+# cols_to_adjust <- setdiff(names(merged_data), "country")
+# merged_data_updated <- redistribute_negative_by_group(
+#   data = merged_data,
+#   group_var = "country",
+#   cols_to_adjust = cols_to_adjust
+# )
+# 
+# post_redistribution_count <- merged_data_updated %>%
+#   filter(hb1 == 2, ha0 == 2, country == "India_v11") %>%
+#   nrow()
+# print(paste("Nombre après redistribution:", post_redistribution_count))
+
+#Supression des NA et des -9
+merged_data_updated <- merged_data %>%
+  filter(hb1 != -9, ha0 != -9, hf1a != -9, hf3a != -9, hf6 != -9, hf8 != -9, he2a != -9, hc1 != -9, a6a != -9)
+  
+
+# 3. Recodage de la taille des entreprises (a6a)
+# Sauvegarde d'une version avec les micro-entreprises pour le Pakistan
+merged_data_updated_pakistan <- merged_data_updated
+
+# Regroupement des micro-entreprises avec les petites
+merged_data_updated <- merged_data_updated %>%
+  mutate(a6a = if_else(a6a == 0, 1, a6a))
+
+# 4. Conversion des colonnes en factor
+merged_data_updated <- merged_data_updated %>%
+  mutate(across(-idstd, as.factor))
+str(merged_data_updated)
+```
+
+```{r, include=FALSE}
+# ==============================================================================
+# Vérification finale des données
+# ==============================================================================
+
+# Tables de fréquences finales
+final_tables <- lapply(merged_data_updated, table)
+final_tables
+
+# Résumé des données finales
+skim(merged_data_updated)
+
+# Description des modalités finales
+final_modalities <- apply(merged_data_updated, 2, unique)
+final_result <- data.frame(
+  Variable = colnames(merged_data_updated),
+  Nombre_Uniques = sapply(final_modalities, length),
+  Modalites_Uniques = sapply(final_modalities, function(x) paste(x, collapse = ", "))
+)
+```
+
+
+### Analyse par secteur et taille
+
+En complément des tris croisés sur les variables et les pays, nous effectuons une analyse par secteur (Manufacture vs Services) couplée à la taille.
+
+```{r, echo=FALSE}
+# Analyse par secteur (a6a) et taille (ha0) avec labels
+tcd_a6a <- merged_data_updated %>%
+  mutate(
+    ha0 = factor(ha0, levels = c(1, 2), labels = c("Manufacturing", "Services")),
+    a6a = factor(a6a, levels = c(1, 2, 3), labels = c("Small", "Medium", "Large"))
+  ) %>%  # Transformation des codes en labels
+  group_by(a6a, ha0, country) %>%  # Groupement par secteur, taille et pays
+  summarise(Count = n(), .groups = "drop") %>%  # Comptage des observations
+  group_by(ha0, country) %>%  # Regroupement par taille et pays pour calculer les proportions
+  mutate(Proportion = round(Count / sum(Count), 2)) %>%  # Calcul des proportions arrondies à 2 décimales
+  ungroup() %>%
+  dplyr::select(-Count) %>%  # Optionnel : retirer la colonne des comptes
+  pivot_wider(names_from = country, values_from = Proportion, values_fill = 0)  # Transformation en tableau croisé dynamique
+
+# Tableau des proportions par secteur avec labels
+tcd_a6a %>%
+  kbl(caption = "Distribution par Secteur (ha0) et Taille (a6a)",
+      format = "html",
+      align = "l") %>%
+  kable_classic(full_width = FALSE) %>%
+  column_spec(1, bold = TRUE) %>%
+  add_header_above(c(" " = 2, 
+                     "Bangladesh" = 1, 
+                     "India" = 1, 
+                     "Nepal" = 1, 
+                     "Pakistan" = 1)) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#9f2042")
+
+# Analyse par innovation (hb1) et taille (ha0) avec labels
+tcd_hb1 <- merged_data_updated %>%
+  mutate(
+    ha0 = factor(ha0, levels = c(1, 2), labels = c("Manufacturing", "Services")),
+    hb1 = factor(hb1, levels = c(1, 2), labels = c("Yes", "No"))
+  ) %>%  # Transformation des codes en labels
+  group_by(hb1, ha0, country) %>%  # Groupement par innovation, taille et pays
+  summarise(Count = n(), .groups = "drop") %>%  # Comptage des observations
+  group_by(ha0, country) %>%  # Regroupement par taille et pays pour calculer les proportions
+  mutate(Proportion = round(Count / sum(Count), 2)) %>%  # Calcul des proportions arrondies à 2 décimales
+  ungroup() %>%
+  dplyr::select(-Count) %>%  # Optionnel : retirer la colonne des comptes
+  pivot_wider(names_from = country, values_from = Proportion, values_fill = 0)  # Transformation en tableau croisé dynamique
+
+# Tableau des proportions par innovation avec labels
+tcd_hb1 %>%
+  kbl(caption = "Distribution par Innovation (hb1) et Taille (ha0)",
+      format = "html", 
+      align = "l") %>%
+  kable_classic(full_width = FALSE) %>%
+  column_spec(1, bold = TRUE) %>%
+  add_header_above(c(" " = 2,
+                     "Bangladesh" = 1,
+                     "India" = 1, 
+                     "Nepal" = 1,
+                     "Pakistan" = 1)) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#9f2042")
+
+```
+
+Les tableaux présentés illustrent des relations significatives entre la taille des entreprises, le secteur d'activité et les niveaux d'innovation dans les quatre pays étudiés. Une observation notable est la quasi-inexistence des grandes entreprises dans le secteur des services, à l'exception marquée de l'Inde où 23% des grandes entreprises opèrent dans ce secteur. En revanche, au Bangladesh, au Népal et au Pakistan, les grandes entreprises sont majoritairement concentrées dans le secteur manufacturier, représentant respectivement 36%, 24% et 22% de ce secteur. De plus, les petites et moyennes entreprises dominent le secteur des services dans tous les pays, avec des proportions élevées au Bangladesh (69%) et au Pakistan (64%), mais beaucoup moins en Inde (32%) et au Népal (82%) pour les petites entreprises.
+
+### Analyse innovation et secteur
+
+L'innovation est plus marquée dans le secteur des services au Bangladesh, mais le secteur manufacturier reste également significatif avec une proportion d'entreprises innovantes de 56%. En Inde, les entreprises manufacturières sont nettement plus innovantes, probablement en raison de leur taille plus grande, facilitant l'investissement en R&D et en technologies avancées. 
+En revanche, au Pakistan et au Népal, l'innovation reste à un faible niveau dans les deux secteurs, suggérant un manque d'entreprises de taille moyenne à grande capables d'investir dans l'innovation, ce qui indique un besoin de soutien pour stimuler l'innovation dans les petites entreprises.
+
+```{r, echo=FALSE}
+# Calcul des proportions
+proportions_innov <- merged_data_updated %>%
+  group_by(ha0, hb1, country) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  group_by(ha0, country) %>%
+  mutate(proportion = count / sum(count))
+
+# Graphique
+ggplot(proportions_innov, aes(x = ha0, y = proportion, fill = hb1)) +
+  geom_bar(position = "dodge", stat = "identity", width = 0.7) +
+  geom_text(aes(label = scales::percent(proportion, accuracy = 0.1)), 
+            position = position_dodge(width = 0.7), vjust = -0.3) +
+  facet_wrap(~ country) +
+  labs(title = "Proportions d'innovation par taille d'entreprise et pays",
+       x = "Secteur", y = "Proportion") +
+  scale_fill_manual(values = c("#9f2042", "lightblue"), 
+                   labels = c("Innovant", "Non innovant")) +
+  scale_y_continuous(labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.title = element_blank(), legend.position = "top")
+```
+
+L'innovation est particulièrement prononcée dans le secteur des services au Bangladesh, tandis que le secteur manufacturier demeure également significatif avec 56% des entreprises innovantes. En Inde, les entreprises manufacturières affichent un niveau d'innovation nettement supérieur, probablement grâce à leur taille plus importante qui facilite les investissements en R&D et en technologies avancées. À l'inverse, au Pakistan et au Népal, l'innovation reste faible dans les deux secteurs, indiquant un manque d'entreprises de taille moyenne à grande capables d'investir dans l'innovation.
+
+#### Analyse Correspodance Multiple (ACM)
+
+```{r, fig.width=8, fig.height=4, warning=FALSE, echo=FALSE}
+# Recodage de la variable hf6_bis
+merged_data_updated$hf6_bis <- ifelse(merged_data_updated$hf6 %in% 
+                                    c("In-house R&D", "Recent hires", "Parent/firm knowledge", "Customer feedback"), 0, 1)
+
+# Préparation du dataset Pakistan
+df_pakistan <- merged_data_updated %>%
+ filter(country == "Pakistan")
+
+df_pakistan <- df_pakistan %>%
+ filter(hb1 != "Non renseigné") %>%
+ mutate(hb1 = factor(hb1))
+
+# Liste des variables à tester
+variables_x <- c("ha0", "a6a", "he2a", "hf3a", "hf8", "hf6", "hf6_bis", "hf1a", "hc1")
+
+# Tests statistiques
+resultats <- data.frame(Variable = character(), 
+                      Chi2 = numeric(), 
+                      CramersV = numeric(), 
+                      PValue = numeric(), 
+                      stringsAsFactors = FALSE)
+
+# Boucle des tests
+for (var in variables_x) {
+ tryCatch({
+   tab <- table(df_pakistan$hb1, df_pakistan[[var]])
+   if (nrow(tab) > 1 && ncol(tab) > 1 && sum(tab) > 0) {
+     chi2_result <- chisq.test(tab)
+     cramers_v_result <- sqrt(chi2_result$statistic / (sum(tab) * (min(dim(tab)) - 1)))
+     
+     resultats <- rbind(resultats, data.frame(
+       Variable = var,
+       Chi2 = chi2_result$statistic,
+       CramersV = cramers_v_result,
+       PValue = chi2_result$p.value
+     ))
+   }
+ }, error = function(e) {
+   print(paste("Erreur pour la variable", var, ":", e$message))
+ })
+}
+
+# Affichage des résultats des tests
+resultats %>%
+ mutate(
+   Chi2 = round(Chi2, 2),
+   CramersV = round(CramersV, 3),
+   PValue = format.pval(PValue, digits = 3)
+ ) %>%
+ kbl(caption = "Résultats des tests d'indépendance avec l'innovation",
+     col.names = c("Variable", "Khi-deux", "V de Cramer", "P-value"),
+     format = "html",
+     align = "l") %>%
+ kable_classic(full_width = FALSE) %>%
+ column_spec(1, bold = TRUE) %>%
+ row_spec(0, bold = TRUE, color = "white", background = "#9f2042") %>%
+ row_spec(which(resultats$PValue < 0.05), background = "lightgreen")
+
+# ACM pour tous les pays
+acm_all <- MCA(merged_data_updated[, c("ha0", "a6a", "hf3a", "hf6", "hf8", "hf1a", "hc1", "hb1")], 
+              graph = FALSE)
+
+print("Pourcentages de variance expliquée - Tous les pays:")
+print(round(acm_all$eig[,2], 2))
+
+# Graphique ACM tous pays
+p1 <- fviz_mca_ind(acm_all,
+                  geom = "point",
+                  col.ind = merged_data_updated$country,
+                  addEllipses = TRUE,
+                  title = "ACM - Tous les pays") +
+ scale_color_discrete(name = "Pays")
+
+# ACM pour le Pakistan uniquement
+acm_pak <- MCA(df_pakistan[, c("ha0", "a6a", "hf3a", "hf6", "hf8", "hf1a", "hc1", "hb1")], 
+              graph = FALSE)
+
+print("Pourcentages de variance expliquée - Pakistan:")
+print(round(acm_pak$eig[,2], 2))
+
+# Graphique ACM Pakistan
+p2 <- fviz_mca_ind(acm_pak,
+                  geom = "point",
+                  col.ind = "#9f2042",
+                  addEllipses = TRUE,
+                  title = "ACM - Pakistan")
+
+## Même pairplot mais avec les variables
+
+# Graphique des variables pour tous les pays
+p1_var <- fviz_mca_var(acm_all,
+                       col.var = "#9f2042",
+                       title = "Variables - Tous les pays",
+                       repel = TRUE    # Évite le chevauchement des labels
+)
+
+# Graphique des variables pour le Pakistan
+p2_var <- fviz_mca_var(acm_pak,
+                       col.var = "#9f2042", 
+                       title = "Variables - Pakistan",
+                       repel = TRUE
+)
+
+gridExtra::grid.arrange(p1, p2, ncol = 2, widths = c(8, 6))
+
+
+gridExtra::grid.arrange(p1_var, p2_var, ncol = 2, widths = c(8, 6))
+
+fviz_contrib(acm_all, choice = "var", axes = 1:2, top = 10, fill = "#9f2042")
+```
+
+Les résultats de l'Analyse des Correspondances Multiples (ACM) révèlent des dynamiques importantes concernant les déterminants de l'innovation dans les pays étudiés. Pour l'ensemble des pays d'Asie du Sud, la première dimension (dim1) explique 22,14% de la variance, tandis que la deuxième dimension (dim2) en explique 12,82%. Ces proportions sont légèrement similaires pour le Pakistan, avec 21,62% pour dim1 et 13,32% pour dim2.
+
+La dim1, associée à la variable hf1a_Yes (engagement dans la R&D interne), représente la principale source de variance, soulignant que les entreprises investissant dans la recherche et le développement internes sont significativement distinctes en termes de capacité d'innovation. Cela indique que la présence d'activités de R&D internes est un facteur clé différenciant les entreprises innovantes des autres.
+
+La dim2, liée à la variable hf8_Yes (recevoir une aide non financière gouvernementale pour l'innovation), capture une part substantielle de la variance supplémentaire. Cela souligne l'importance du soutien institutionnel et des politiques gouvernementales dans le processus d'innovation des entreprises. En particulier, au Pakistan, la proportion légèrement supérieure de variance expliquée par dim2 (13,32%) par rapport à l'ensemble des pays suggère que le soutien gouvernemental joue un rôle particulièrement pertinent dans ce contexte national.
+
+# Analyse économétrique
+
+## Procédure d'estimation
+
+Pour étudier les déterminants de l'innovation dans le contexte sud-asiatique, nous adoptons une approche empirique en plusieurs étapes. Notre variable d'intérêt est l'innovation en produits ou services (hb1), codée de manière binaire (1 si l'entreprise a introduit une innovation, 0 sinon). Compte tenu de la nature dichotomique de cette variable, nous utilisons un modèle logit.
+Notre modèle complet initial se présente sous la forme suivante :
+
+$$
+P(hb1 = 1) = \lambda(
+    \beta_0 
+    + \beta_1 a6a_{2;medium}
+    + \beta_2 a6a_{3;large}
+    + \beta_3 he2a_1 
+    + \beta_4 hf3a_1 
+    + \beta_5 hf8_1 
+    + \beta_6 hf6_1 
+    + \beta_7 hf1a_1 \\
+    + \beta_8 hc1_1 
+    + \beta_9 ha0_1 
+    + \beta_{10} \text{countryBangladesh} 
+    + \beta_{11} \text{countryIndia} 
+    + \beta_{12} \text{countryNepal} 
+    + \varepsilon
+)
+$$
+
+où $\lambda$ représente la fonction de répartition de la loi logistique.
+En utilisant une procédure de sélection stepwise basée sur le critère d'information d'Akaike (AIC), nous identifions le modèle baseline suivant, qui exclut la variable de services marketing (he2a) :
+$$
+P(Innovation de produit/service = 1) = \lambda(
+    \beta_0 
+    + \beta_1 \text{Taille de l'entreprise (medium)}
+    + \beta_2 \text{Taille de l'entreprise (large)}\\
+    + \beta_4 \text{Formation des salariés}
+    + \beta_5 \text{Aide non financière pour innovation}\\
+    + \beta_6 \text{Source d'information pour innovation}
+    + \beta_7 \text{Investissements R&D}\\
+    + \beta_8 \text{Innovation méthodes de production}
+    + \beta_9 \text{Secteur}\\
+    + \beta_{10} \text{Bangladesh}
+    + \beta_{11} \text{India}
+    + \beta_{12} \text{Nepal}
+    + \varepsilon
+)
+$$
+Pour approfondir notre compréhension des mécanismes à l'œuvre, nous testons ensuite quatre modèles avec interactions, explorant comment l'effet des activités de R&D (hf1a) varie selon :
+
+La taille de l'entreprise :
+$$ P(hb1 = 1) = \lambda(\beta_0 + \dots + \beta_{12} \text{Taille de l'entreprise (large)} \times \text{Investissements R&D} \\ + \beta_{13} \text{Taille de l'entreprise (large)} \times \text{Investissements R&D} + \varepsilon) $$
+
+Le pays d'implantation :
+$$ P(hb1 = 1) = \lambda(\beta_0 + \dots + \beta_{12} \text{Bangladesh} \times \text{Investissements R&D} + \\ \beta_{13} \text{India} \times \text{Investissements R&D} + \beta_{14} \text{countryNepal} \times hf1a_1 + \varepsilon) $$
+L'aide gouvernementale :
+$$ P(hb1 = 1) = \lambda(\beta_0 + \dots + \beta_{12} \text{Aide non financière pour innovation} \times \text{Investissements R&D} + \varepsilon) $$
+Le secteur d'activité :
+$$P(hb1 = 1) = \lambda(\beta_0 + \dots + \beta_{12} \text{Secteur} \times \text{Investissements R&D} + \varepsilon) $$
+
+Enfin, nous procédons à une analyse spécifique du Pakistan en réestimant le modèle baseline sur le sous-échantillon des entreprises pakistanaises. Pour faciliter l'interprétation des résultats, nous calculons les effets marginaux moyens (AME) pour l'ensemble des modèles. Cette approche nous permet d'évaluer non seulement la significativité statistique des relations, mais aussi leur importance économique.
+
+## Résultats
+
+### Baseline
+
+```{r, include=FALSE}
+merged_data_updated <- merged_data_updated %>%
+  mutate(across(where(is.factor), as.character))
+merged_data_updated <- merged_data_updated %>%
+  mutate(across(-a6a, ~ ifelse(. == "2", "0", .))) %>%  # Remplacer "2" par "0" sauf pour a6a
+  dplyr::select(-hf6_bis)
+merged_data_updated <- merged_data_updated %>%
+  mutate(across(-idstd, as.factor))
+```
+
+
+```{r, echo=FALSE, results='hide'}
+data_model <- merged_data_updated
+
+data_model$country <- relevel(data_model$country, ref = "Pakistan")
+
+# Créer le modèle complet initial
+full_model <- glm(hb1 ~ a6a + he2a + hf3a + hf8 + hf6 + hf1a + hc1 + ha0 + country, 
+                  family = binomial(link = "logit"), 
+                  data = data_model)
+
+baseline_model <- stepAIC(full_model, direction = "both", trace = FALSE)
+
+# Afficher les résultats
+summary(baseline_model)
+
+# Afficher l'AIC du modèle final
+AIC(full_model)
+AIC(baseline_model)
+
+# Calculer les odds ratios
+odds_ratios <- exp(coef(baseline_model))
+odds_ratios
+```
+| Variable            | Estimate  | Std. Error | z value |  p-value   | Odds Ratio |
+|---------------------|-----------|------------|---------|------------|------------|
+| (Intercept)         | -1.70716  | 0.12795    | -13.343 | < 2e-16 ***| 0.1814     |
+| a6a2                | -0.02161  | 0.07655    | -0.282  | 0.7777     | 0.9786     |
+| a6a3                |  0.16368  | 0.09040    |  1.811  | 0.0702 .   | 1.1778     |
+| hf3a1               |  0.15920  | 0.07105    |  2.241  | 0.0251 *   | 1.1726     |
+| hf81                |  0.36140  | 0.08829    |  4.094  | 4.25e-05 **| 1.4353     |
+| hf61                | -0.14004  | 0.06598    | -2.122  | 0.0338 *   | 0.8693     |
+| hf1a1               |  0.58326  | 0.07506    |  7.770  | 7.82e-15 ***| 1.7919    |
+| hc11                | -0.76299  | 0.07509    | -10.161 | < 2e-16 ***| 0.4663     |
+| ha01                |  0.50424  | 0.07718    |  6.534  | 6.42e-11 ***| 1.6557    |
+| Bangladesh          |  2.20638  | 0.15712    | 14.043  | < 2e-16 ***| 9.0828     |
+| India_v11           |  2.05484  | 0.11700    | 17.562  | < 2e-16 ***| 7.8056     |
+| Nepal               | -0.07243  | 0.16079    | -0.450  | 0.6524     | 0.9301     |
+
+
+```{r, echo=FALSE}
+ggcoef_multinom(baseline_model, data = data_model, conf.int = TRUE, conf.level = 0.95, exponentiate = TRUE, type = "faceted") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Les résultats de notre analyse empirique révèlent plusieurs éléments intéressants concernant les déterminants de l'innovation dans le contexte sud-asiatique. La procédure de sélection stepwise basée sur le critère d'information d'Akaike (AIC) a permis d'identifier le modèle le plus pertinent comme celui excluant la variable de services marketing (he2a). En examinant les coefficients, nous observons que la conduite d'activités de R&D internes (hf1a) augmente significativement les chances d'innover avec un odds ratio de 1,79 (β=0,583, p<0,001), indiquant que les entreprises menant des activités de R&D ont près de deux fois plus de chances d'introduire des innovations que celles qui n'en font pas. L'appartenance au secteur manufacturier plutôt qu'aux services (ha0) a également un impact positif significatif avec un odds ratio de 1,66 (β=0,504, p<0,001). Le fait de recevoir une aide non financière du gouvernement pour les activités d'innovation (hf8) accroît les chances d'innover de 1,44 fois (β=0,361, p<0,001). La formation des employés spécifiquement pour l'innovation (hf3a) a aussi un effet positif significatif bien que plus modeste (OR=1,17, β=0,159, p<0,05). En ce qui concerne la taille des entreprises (a6a), les moyennes entreprises montrent une tendance positive par rapport aux micro-entreprises (β=0,164, p<0,10), tandis que les petites entreprises ne présentent pas de différence significative. L'utilisation de sources d'information externes pour l'innovation (hf6) semble avoir un effet légèrement négatif (OR=0,87, β=-0,140, p<0,05). Une découverte particulièrement frappante concerne les différences entre pays : par rapport au Pakistan (pays de référence), les entreprises du Bangladesh et de l'Inde ont respectivement 9,08 et 7,81 fois plus de chances d'innover (p<0,001 dans les deux cas), tandis que le Népal ne présente pas de différence significative. Ces résultats soulignent l'importance cruciale des capacités internes de R&D et du soutien gouvernemental non financier dans la promotion de l'innovation des entreprises sud-asiatiques.
+
+```{r, echo=FALSE}
+# R² de McFadden
+# R² = 1 - (log likelihood du modèle final / log likelihood du modèle nul)
+null_model <- glm(hb1 ~ 1, family=binomial(link="logit"), data=data_model)
+mcfadden <- 1 - (logLik(baseline_model)/logLik(null_model))
+mcfadden
+
+# Effets marginaux moyens
+margins_model <- margins(baseline_model)
+summary(margins_model)
+```
+
+Pour obtenir des interprétations plus intuitives, nous examinons les effets marginaux moyens (AME). En termes d'effets pays, on constate que, toutes choses égales par ailleurs, le fait d'être localisé au Bangladesh ou en Inde augmente respectivement la probabilité d'innover en produits/services de 47,1 et 43,9 points de pourcentage par rapport au Pakistan, tandis que la localisation au Népal n'a pas d'effet significatif. Les entreprises qui mènent des activités de R&D internes (hf1a) ont une probabilité d'innover supérieure de 12 points de pourcentage par rapport à celles qui n'en font pas. De même, l'appartenance au secteur manufacturier plutôt qu'aux services (ha01) augmente cette probabilité de 10,4 points, et le fait de recevoir une aide non financière du gouvernement (hf8) l'accroît de 7,2 points. La formation des employés spécifiquement pour l'innovation (hf3a) a un effet positif plus modeste mais significatif de 3,2 points de pourcentage. En ce qui concerne la taille des entreprises (a6a), seules les moyennes entreprises montrent une tendance positive marginalement significative (+3,3 points) par rapport aux petites entreprises. Un résultat intéressant concerne l'utilisation de sources d'information externes pour l'innovation (hf61) qui réduit légèrement la probabilité d'innover (-2,8 points), suggérant peut-être une plus grande efficacité des sources internes d'information pour l'innovation dans le contexte sud-asiatique. Tous ces effets marginaux sont statistiquement significatifs au seuil de 5%, à l'exception de la taille des entreprises où seules les moyennes entreprises présentent un effet marginalement significatif (p<0,10) et du Népal qui ne se distingue pas significativement du Pakistan.
+
+### Modèles d'interaction
+
+```{r, echo=FALSE}
+# Fonction pour calculer le R² de McFadden
+mcfadden_r2 <- function(model) {
+  null_model <- glm(hb1 ~ 1, family=binomial(link="logit"), data=data_model)
+  return(1 - logLik(model)/logLik(null_model))
+}
+
+# Modèle 1: Interaction taille x R&D
+model1 <- glm(hb1 ~ a6a * hf1a + hf3a + hf8 + hf6 + hc1 + ha0 + country, 
+              family = binomial(link = "logit"), 
+              data = data_model)
+summary(model1)
+
+# Modèle 2: Interaction pays x R&D
+model2 <- glm(hb1 ~ country * hf1a + a6a + hf3a + hf8 + hf6 + hc1 + ha0, 
+              family = binomial(link = "logit"), 
+              data = data_model)
+summary(model2)
+
+# Modèle 3: Interaction aide gouvernementale x R&D
+model3 <- glm(hb1 ~ hf8 * hf1a + a6a + hf3a + hf6 + hc1 + ha0 + country,
+              family = binomial(link = "logit"), 
+              data = data_model)
+summary(model3)
+
+# Modèle 4: Interaction secteur x R&D 
+model4 <- glm(hb1 ~ ha0 * hf1a + a6a + hf3a + hf8 + hf6 + hc1 + country,
+              family = binomial(link = "logit"), 
+              data = data_model)
+summary(model4)
+
+# Création de la matrice de résultats
+results_matrix <- data.frame(
+  Model = c("Model 1: Size x R&D", 
+            "Model 2: Country x R&D", 
+            "Model 3: Gov Support x R&D",
+            "Model 4: Sector x R&D"),
+  AIC = c(AIC(model1), AIC(model2), AIC(model3), AIC(model4)),
+  McFadden_R2 = c(mcfadden_r2(model1), 
+                  mcfadden_r2(model2), 
+                  mcfadden_r2(model3),
+                  mcfadden_r2(model4)),
+  Residual_Dev = c(model1$deviance, 
+                   model2$deviance, 
+                   model3$deviance,
+                   model4$deviance),
+  DF = c(model1$df.residual, 
+         model2$df.residual, 
+         model3$df.residual,
+         model4$df.residual)
+)
+
+# Test du rapport de vraisemblance
+lrtest_results <- data.frame(
+  Model = c("Model 1 vs Base",
+            "Model 2 vs Base",
+            "Model 3 vs Base",
+            "Model 4 vs Base"),
+  LR_test = c(
+    anova(baseline_model, model1, test="LRT")$`Pr(>Chi)`[2],
+    anova(baseline_model, model2, test="LRT")$`Pr(>Chi)`[2],
+    anova(baseline_model, model3, test="LRT")$`Pr(>Chi)`[2],
+    anova(baseline_model, model4, test="LRT")$`Pr(>Chi)`[2]
+  )
+)
+
+# Arrondir et afficher les résultats du test
+lrtest_results$LR_test <- round(lrtest_results$LR_test, 4)
+print(lrtest_results)
+```
+
+Pour approfondir notre compréhension des déterminants de l'innovation, nous avons testé quatre modèles intégrant des interactions spécifiques avec les activités de R&D. La comparaison des modèles via les tests de rapport de vraisemblance indique que seuls les modèles 1 (taille × R&D) et 4 (secteur × R&D) présentent des améliorations significatives par rapport au modèle de base (p = 0,0130 et p = 0,0014 respectivement). Cette conclusion est corroborée par les AIC, avec le modèle 4 présentant le meilleur ajustement (AIC = 5680,8), suivi du modèle 1 (AIC = 5684,4).
+
+Dans le modèle 1, l'effet principal de la R&D est positif et significatif (β = 0,277, p < 0,05), et cet effet est renforcé pour les entreprises de taille moyenne (β = 0,329, p < 0,10) et grande (β = 0,554, p < 0,01). Ces résultats suggèrent que l'efficacité des activités de R&D s'accroît avec la taille de l'entreprise, possiblement en raison de meilleures capacités d'absorption et de ressources plus importantes. Le modèle 4 met en évidence une forte complémentarité entre le secteur manufacturier et les activités de R&D (β = 0,544, p < 0,01), indiquant que l'impact de la R&D sur l'innovation est significativement plus important dans le secteur manufacturier que dans les services.
+
+En revanche, les modèles 2 et 3 n'apportent pas d'éclairage supplémentaire significatif. L'effet de la R&D ne varie pas significativement selon les pays (modèle 2, tous les termes d'interaction pays × R&D sont non significatifs), et il n'y a pas d'interaction significative entre des aides gouvernementales et la R&D (modèle 3, β = -0,048, p > 0,10). Ces résultats suggèrent que l'efficacité de la R&D est principalement conditionnée par les caractéristiques structurelles des entreprises (taille et secteur) plutôt que par les facteurs institutionnels.
+
+
+```{r, include=FALSE}
+# Effets marginaux conditionnels pour le modèle 1 (Taille × R&D)
+margins_model1_interaction <- margins(model1, 
+                                    variables = c("hf1a", "a6a"), 
+                                    at = list(a6a = c("1", "2", "3")))
+summary(margins_model1_interaction)
+
+# Effets marginaux conditionnels pour le modèle 2 (Pays × R&D)
+margins_model2_interaction <- margins(model2, 
+                                    variables = c("hf1a", "country"), 
+                                    at = list(country = c("Pakistan", "Bangladesh", 
+                                                        "India_v11", "Nepal")))
+summary(margins_model2_interaction)
+
+# Effets marginaux conditionnels pour le modèle 3 (Aide Etat × R&D)
+margins_model3_interaction <- margins(model3, 
+                                    variables = c("hf1a", "hf8"), 
+                                    at = list(hf8 = c("0", "1")))
+summary(margins_model3_interaction)
+
+# Effets marginaux conditionnels pour le modèle 4 (Secteur × R&D)
+margins_model4_interaction <- margins(model4, 
+                                    variables = c("hf1a", "ha0"), 
+                                    at = list(ha0 = c("0", "1")))
+summary(margins_model4_interaction)
+```
+
+### Modèle Pakistan
+
+```{r, echo=FALSE}
+# Créer le sous-ensemble Pakistan
+pakistan_data <- subset(data_model, country == "Pakistan")
+
+# Modèle de base pour le Pakistan 
+pak_model <- glm(hb1 ~ a6a + hf3a + hf8 + hf6 + hf1a + hc1 + ha0,
+                 family = binomial(link = "logit"),
+                 data = pakistan_data)
+summary(pak_model)
+
+# Calcul du R² de McFadden
+pak_null <- glm(hb1 ~ 1, family = binomial(link = "logit"), data = pakistan_data)
+pak_mcfadden <- 1 - logLik(pak_model)/logLik(pak_null)
+pak_mcfadden
+
+# Effets marginaux pour le Pakistan
+pak_margins <- margins(pak_model)
+summary(pak_margins)
+```
+
+Après avoir examiné les déterminants globaux de l'innovation dans la région sud-asiatique, nous nous intéressons désormais plus en détail au cas particulier du Pakistan. Cette analyse permet de mieux comprendre comment les facteurs identifiés influencent l'innovation dans les entreprises pakistanaises, en offrant une perspective nuancée par rapport à l'ensemble de la région.
+
+Le modèle logistique ajusté pour le sous-ensemble des données pakistanaises présente un R² de McFadden de 0,122, légèrement inférieur au modèle global mais toujours dans une fourchette acceptable, indiquant que le modèle capture une proportion significative des déterminants de l'innovation au Pakistan.
+
+L'examen des coefficients du modèle révèle que certaines variables, contrairement au modèle global, ne sont pas statistiquement significatives pour le Pakistan. Notamment, la formation des salariés (hf3a) et les investissements en R&D (hf1a), qui étaient des déterminants clés dans l'analyse globale, n'exercent pas un effet significatif sur l'innovation dans le contexte pakistanais. Cela suggère que les dynamiques locales peuvent différer de celles observées dans la région plus large.
+
+Cependant, plusieurs facteurs restent significatifs et influents. La taille de l'entreprise, spécifiquement les entreprises de taille moyenne (a6a2), affiche un effet positif et significatif sur la probabilité d'innover. Les effets marginaux indiquent que les entreprises de taille moyenne ont une probabilité accrue d'innover de 7,48 points de pourcentage par rapport aux petites entreprises. De plus, l'appartenance au secteur manufacturier (ha01) est également un déterminant significatif, avec un effet marginal de 9,84 points de pourcentage. Cela indique que les entreprises manufacturières ont une propension accrue à innover par rapport aux entreprises de services.
+
+Le résultat le plus remarquable concerne l'innovation en produits ou services (hc1). Le coefficient estimé est très élevé (β = 2,527, p < 0,001) et l'effet marginal associé est de 53,47 points de pourcentage. Cela suggère une forte complémentarité entre différents types d'innovation : les entreprises qui innovent en produits ou services sont aussi plus susceptibles d'introduire d'autres formes d'innovation.
+
+Il est également notable que certaines variables, telles que l'aide non financière du gouvernement (hf8) et l'utilisation de sources d'information externes pour l'innovation (hf6), n'ont pas d'effet significatif sur l'innovation au Pakistan, contrairement à ce qui a été observé globalement. Cela pourrait suggérer que les mécanismes de soutien publics et les sources externes d'information ne jouent pas encore un rôle déterminant dans le système d'innovation pakistanais.
+
+# Tests de robustesse
+
+## Test VIF
+### Test VIF Baseline
+```{r, echo=FALSE}
+vif_values <- car::vif(baseline_model)
+print("vif baseline_model")
+vif_values
+```
+D'après les valeurs de VIF( Variance Inflation Factor), il ne semble pas avoir de problème significatif de multicolinéarité entre les variables. 
+
+Elles sont toutes proche de 1. 
+
+### Test VIF Pakistan
+
+```{r, echo=FALSE}
+vif_values <- car::vif(pak_model)
+print("vifpak_model")
+vif_values
+```
+De même pour le modèle avec uniquement les observations du Pakistan, il n'y a pas de multicolinéarité significatives entre les variables. 
+
+## Matrice de confusion et métriques
+### Baseline : Matrice de confusion et métriques
+
+```{r, echo=FALSE}
+# Prédictions des probabilités
+predicted_probs <- predict(baseline_model, type = "response")
+
+# Convertir les probabilités en classes
+threshold <- 0.5
+predicted_classes <- ifelse(predicted_probs > threshold, 1, 0)
+
+# Matrice de confusion
+actual_classes <- data_model$hb1  # Remplacez par votre variable cible
+confusion_matrix <- table(Predicted = predicted_classes, Actual = actual_classes)
+
+# Calcul des métriques
+true_positive <- confusion_matrix[2, 2]  # Prédits positifs et réels positifs
+true_negative <- confusion_matrix[1, 1]  # Prédits négatifs et réels négatifs
+false_positive <- confusion_matrix[2, 1] # Prédits positifs mais réels négatifs
+false_negative <- confusion_matrix[1, 2] # Prédits négatifs mais réels positifs
+
+# Taux de précision (Accuracy)
+accuracy <- (true_positive + true_negative) / sum(confusion_matrix)
+
+# Précision (Precision)
+precision <- true_positive / (true_positive + false_positive)
+
+# Rappel (Recall ou Sensitivity)
+recall <- true_positive / (true_positive + false_negative)
+
+# Taux de faux positifs (False Positive Rate)
+false_positive_rate <- false_positive / (false_positive + true_negative)
+
+
+# Afficher les résultats
+print("Matrice de confusion baseline model")
+print(confusion_matrix)
+cat("\nMétriques :\n")
+cat("Précision (Accuracy) :", round(accuracy, 3), "\n")
+cat("Précision (Precision) :", round(precision, 3), "\n")
+cat("Rappel (Recall/Sensitivity) :", round(recall, 3), "\n")
+cat("Taux de faux positifs (False Positive Rate) :", round(false_positive_rate, 3), "\n")
+```
+Avant de commenter les résultats de la matrice de confusion, il est crucial de rappeler que l'interprétation des métriques dépend fortement de la qualité de nos données et du modèle utilisé. Les résultats actuels pourraient être améliorés si on ajustait la structure des données, par exemple en traitant les déséquilibres dans les classes ou en utilisant des méthodes avancées comme le sur-échantillonnage ou le sous-échantillonnage, ou en ajustant les données on leur y associant un poids. 
+Par ailleurs, la suppression des valeurs manquantes (-9) , bien que nécessaire, peut également réduire la représentativité de l'échantillon et introduire des biais dans les estimations.
+
+
+En ce qui concerne les métriques :
+
+- La précision globale (Accuracy) est de 70,1 %. Cela signifie que, dans 70 % des cas, le modèle a correctement prédit les résultats. Ce chiffre peut sembler correct, mais il masque des performances différentes entre les classes.
+  
+- La précision (Precision) de 68,1 % montre qu'un peu plus des deux tiers des prédictions positives du modèle sont correctes. Cela pourrait indiquer un problème de sur-prédiction des positifs (classe 1), mais ce n'est pas alarmant.
+
+- Le rappel (Recall/Sensitivity) est élevé à 85,6 %. Cela signifie que le modèle est très efficace pour identifier les cas positifs réels (classe 1). Cependant, cela peut aller au détriment de la précision si beaucoup de faux positifs sont inclus.
+
+- Le taux de faux positifs (False Positive Rate) est de 48,7 %, ce qui est assez élevé. Cela indique que presque la moitié des cas réellement négatifs (classe 0) sont mal classés comme positifs (classe 1).
+
+
+### Pakistan : Matrice de confusion et métriques
+
+```{r, echo=FALSE}
+# Prédictions des probabilités
+predicted_probs <- predict(pak_model, type = "response")
+
+# Convertir les probabilités en classes
+threshold <- 0.5
+predicted_classes <- ifelse(predicted_probs > threshold, 1, 0)
+
+# Matrice de confusion
+actual_classes <- pakistan_data$hb1  # Remplacez par votre variable cible
+confusion_matrix <- table(Predicted = predicted_classes, Actual = actual_classes)
+
+# Calcul des métriques
+true_positive <- confusion_matrix[2, 2]  # Prédits positifs et réels positifs
+true_negative <- confusion_matrix[1, 1]  # Prédits négatifs et réels négatifs
+false_positive <- confusion_matrix[2, 1] # Prédits positifs mais réels négatifs
+false_negative <- confusion_matrix[1, 2] # Prédits négatifs mais réels positifs
+
+# Taux de précision (Accuracy)
+accuracy <- (true_positive + true_negative) / sum(confusion_matrix)
+
+# Précision (Precision)
+precision <- true_positive / (true_positive + false_positive)
+
+# Rappel (Recall ou Sensitivity)
+recall <- true_positive / (true_positive + false_negative)
+
+# Taux de faux positifs (False Positive Rate)
+false_positive_rate <- false_positive / (false_positive + true_negative)
+
+
+# Afficher les résultats
+print("Matrice de confusion pakistan")
+print(confusion_matrix)
+cat("\nMétriques :\n")
+cat("Précision (Accuracy) :", round(accuracy, 3), "\n")
+cat("Précision (Precision) :", round(precision, 3), "\n")
+cat("Rappel (Recall/Sensitivity) :", round(recall, 3), "\n")
+cat("Taux de faux positifs (False Positive Rate) :", round(false_positive_rate, 3), "\n")
+
+```
+En regardant les métriques, on observe des résultats assez contrastés qui nécessitent une analyse approfondie :
+
+- La précision globale (Accuracy) de 81,9 % est relativement élevée. Cela montre que le modèle effectue correctement la majorité des prédictions, mais cela peut être trompeur puisqu'il y a une classe  dominante dans les données (ce qui pourrait biaiser cette métrique).
+
+- La précision (Precision) de 76,6 % indique que plus des trois quarts des prédictions positives du modèle sont correctes. Cela reflète une bonne performance pour minimiser les faux positifs, mais cela ne donne pas une idée du nombre total de vrais positifs détectés.
+
+- Le rappel (Recall/Sensitivity) est extrêmement faible, à seulement 26,3 %. Mais dans le cas nos données, cela est normal car il y a bien plus d'entreprise non innovante que innovante au Pakistan. 
+
+- Le taux de faux positifs (False Positive Rate) de seulement 2,3 % est très faible, ce qui est un bon point. Cela montre que le modèle classe correctement presque tous les cas négatifs (classe 0) comme tels, avec très peu d’erreurs.
+
+
+## Courbe Roc
+### Courbe Roc Baseline
+
+```{r, echo=FALSE, fig.path='figure/', fig.align='center', warning=FALSE, message=FALSE}
+probabilities <- predict(baseline_model, type = "response")
+roc_curve <- roc(data_model$hb1, probabilities)
+plot(roc_curve, ylim = c(0, 1))
+pROC::auc(roc_curve)
+```
+Le graphique généré  montre la courbe ROC (Receiver Operating Characteristic), qui illustre le compromis entre le taux de vrais positifs (True Positive Rate) et le taux de faux positifs (False Positive Rate) à différents seuils. 
+
+Une AUC de 0.7506 indique une bonne capacité discriminante du modèle. Cela signifie que, dans environ 75 % des cas, le modèle attribue un score de probabilité plus élevé aux observations positives (classe 1) qu’aux observations négatives (classe 0).
+
+Visuellement, la courbe ROC montre une bonne séparation entre la sensibilité (True Positive Rate) et la spécificité (False Positive Rate). La courbe se rapproche du coin supérieur gauche, ce qui reflète une performance globalement satisfaisante.
+
+### Courbe Roc Pakistan
+
+```{r, echo=FALSE, fig.path='figure/', fig.align='center', warning=FALSE, message=FALSE}
+probabilities <- predict(pak_model, type = "response")
+roc_curve <- roc(pakistan_data$hb1, probabilities)
+plot(roc_curve)
+pROC::auc(roc_curve)
+```
+Une AUC de 0.6937 indique une performance plus faible comparée au premier modèle. Cela signifie que le modèle a seulement une capacité modérée à distinguer entre les classes positives et négatives. Dans environ 69 % des cas, il attribue un score de probabilité plus élevé aux observations positives qu'aux négatives.
+
+La courbe ROC est plus proche de la diagonale (ligne grise), ce qui reflète une séparation moins nette entre les classes. 
+Cela est du au fait que les classes sont bien plus déséquilibrés que dans le premier graphique.
+
+# Discussion et conclusion
+
+Cette étude a identifié les principaux déterminants de l'innovation dans quatre pays d'Asie du Sud—le Pakistan, l'Inde, le Bangladesh et le Népal—en s'appuyant sur les données de l'’'Enterprise Survey 2013 et de l'’'Innovation Follow-up Survey de la Banque mondiale. Les investissements en recherche et développement (R&D) internes se sont révélés être un facteur clé, augmentant significativement la probabilité d'’'innovation des entreprises. De plus, l'appartenance au secteur manufacturier et le soutien non financier du gouvernement ont également joué un rôle important dans la stimulation de l'innovation. Les analyses spécifiques au Pakistan ont montré que, contrairement à l'ensemble régional, la R&D et la formation des employés n’étaient pas des déterminants significatifs, mettant en lumière des dynamiques locales distinctes.
+
+L'approche comparative adoptée permet de dégager des tendances régionales tout en soulignant les particularités nationales, offrant ainsi une vision nuancée des facteurs influençant l'innovation. L'utilisation de données riches et variées de la Banque mondiale renforce la robustesse des conclusions. Toutefois, certaines limitations subsistent, notamment la présence de données manquantes et les biais potentiels liés aux variables auto-déclarées. De plus, la méthode de sélection stepwise, bien qu’efficace, pourrait omettre des variables importantes ou sous-estimer des interactions complexes entre les facteurs étudiés.
+
+Les résultats de cette étude sont principalement applicables aux économies émergentes similaires à celles étudiées en Asie du Sud. Cependant, les différences institutionnelles et culturelles entre les pays peuvent limiter la généralisation des conclusions à d’autres contextes géographiques. Les limites méthodologiques, telles que les données manquantes et les possibles biais de réponse, suggèrent que les résultats doivent être interprétés avec prudence. Des recherches futures pourraient bénéficier d’approches longitudinales et de méthodes économétriques alternatives pour approfondir la compréhension des déterminants de l’innovation.
+
+En conclusion, cette étude met en lumière l’importance des investissements en R&D, du soutien gouvernemental et de la taille des entreprises comme principaux moteurs de l’innovation dans les économies émergentes d’Asie du Sud. Les différences observées entre les pays, notamment au Pakistan, soulignent la nécessité d’adopter des stratégies politiques et entrepreneuriales adaptées aux contextes nationaux spécifiques. Malgré certaines limitations, les résultats offrent des pistes précieuses pour les décideurs et les acteurs économiques visant à renforcer les capacités d’innovation et à promouvoir une croissance économique durable dans des environnements en développement.
+
+# Références bibliographiques
+
+AGHION P., et HOWITT P. (1992). *A Model of Growth through Creative Destruction*. *Econometrica*, 60(2), pp. 323–351.
+
+ROMER P. (1990). *Endogenous Technological Change*. *Journal of Political Economy*, 98(5), pp. 71–102.
+
+STERN S., PORTER M., et FURMAN J. (2000). *The Determinants of National Innovative Capacity*. *NBER Working Paper No. 7876*. National Bureau of Economic Research.
+
+ULKU H. (2004). *R&D, Innovation, and Economic Growth: An Empirical Analysis*. *IMF Working Paper No. 04/185*. International Monetary Fund.
+
+CRESPI G., et ZUÑIGA P. (2010). *Innovation and Productivity: Evidence from Six Latin American Countries*. *IDB Working Paper Series No. 218*. Inter-American Development Bank.
+
+QURESHI I., PARK D., CRESPI G. A., et BENAVENTE J. M. (2020). *Trends and Determinants of Innovation in Asia-Pacific and Latin America and the Caribbean*. *Asian Development Bank*.
