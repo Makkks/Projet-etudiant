@@ -1,0 +1,462 @@
+---
+title: "Projet Machine learning"
+author: "Yanis"
+date: "2023-04-12"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+rm(list=ls())
+library(reshape2)
+library(ggplot2)
+library(caret)
+library(kernlab)
+```
+
+
+# Importation de la base
+```{r}
+D =read.csv("C:/Users/ANIMATEUR/Desktop/Cours CMI M1/data/Churn.csv", header = TRUE,sep=",")
+head(D)
+dim(D)
+str(D)
+```
+Commentaire sur la base et ce qu'elle contient
+
+
+```{r}
+summary(D)
+```
+
+```{r}
+sum(is.na(D))
+```
+Il n'y a pas de valeurs manquantes dans notre base.
+
+```{r}
+D$churn= as.factor(D$Churn)
+attach(D)
+```
+
+Notre varaible à prédire étant "Churn" pour savoir si il s'agit d'un bon client ou pas, elle est codée par un chiffre alors on en fait une classification."0" pour dire qu'il s'agit d'un bon client et "1" qu'il s'agit d'un mauvais client.
+
+```{r}
+ggplot(D) + geom_bar(aes(churn),fill = "darkblue",show.legend = NA,
+  inherit.aes = TRUE)
+(table(churn))
+```
+D'après analyse de ce graphique, nous avons 483 qui sont de bon clients et 2850 de mauvais clients.
+nous pouvons regarder les auyrres variables pour comprendre notre jeu de données? 
+```{r}
+pie(table(churn))
+
+barplot(table(Vmail_Message ))
+table(Vmail_Message )
+
+
+```
+Nous faisons ici les commentaire de notre jeu de données; 
+
+
+```{r}
+ggplot(data=D,aes(x=churn,y=Vmail_Message ,fill=churn)) + geom_boxplot()
+
+ggplot(data=D,aes(x=churn,y=income,fill=bad_client_target)) + geom_boxplot()
+ggplot(data=D,aes(x=bad_client_target,y=credit_term,fill=bad_client_target)) + geom_boxplot()
+ggplot(data=D,aes(x=bad_client_target,y=phone_operator,fill=bad_client_target)) + geom_boxplot()
+```
+
+Interpreter les boites à moustaches. 
+En faire plusieurs en fonction des variables explicatives. 
+
+```{r}
+D1 <- subset(D , select=c(-sex,-education,-product_type,-family_status,-bad_client_target))
+plot(D1)
+cor(D1)
+```
+- Nous avons une correlation positive de 0.49 entre les termes du crédit et le montant du crédit. Cela nous semble logique car en fonction du montant demandé les conditions varient.
+- Il y a une carrelation positive de 0.37 entre le revenue et le montant du pret. Cela est surement du au fait que c'est en fonction du revenu d'un client qu'on evalue sa capacité à rembourser.
+- La correlation est negative (-0.31) entre le lieu d'emplacement du client et le revenue de ce dernier. Cela s'explique par la repartiton du revenu selon la region.
+
+```{r}
+chisq.test(bad_client_target,family_status)
+chisq.test(bad_client_target,product_type)
+chisq.test(bad_client_target,education)
+chisq.test(bad_client_target,age)
+
+```
+
+
+# Transformation des var quali en quanti
+```{r}
+# Having children
+D$having_children_flg=as.factor(D$having_children_flg)
+
+# Sex
+D$sex=as.factor(D$sex)
+levels(D$sex)=c(0,1)
+
+#education
+D$education=as.factor(D$education)
+levels(D$education)=c(0,1,2,3,4,5)
+
+#product type
+D$product_type=as.factor(D$product_type)
+levels(D$product_type)=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)
+
+# Family statut
+D$family_status=as.factor(D$family_status)
+levels(D$family_status)=c(0,1,2)
+
+```
+Pour la variable sexe, nous avons pris "1" pour Masculin et "0" pour Feminin 
+
+
+# Méthode de Knn
+
+## Decoupage de la base
+```{r}
+D$bad_client_target=as.factor(D$bad_client_target)
+levels(D$bad_client_target)=c("No","Yes")
+set.seed(300)
+indxTrain = createDataPartition(y=D$bad_client_target,p=0.75,list=FALSE)
+Dtrain = D[indxTrain,] #base apprentissage 
+Dtest = D[-indxTrain,] #base test
+```
+Le découpage de la base en deux, base test et base apprentissage.
+
+# le nuage de points des données d’apprentissage
+
+```{r}
+ggplot(Dtrain, aes(x=age, y=income))+
+  geom_point(size=2, aes(pch=bad_client_target,col=bad_client_target))
+```
+Ici par exemple, on voit que les bons clients ont un revenu plus élevé que les mauvais clients et sont généralement plus agés.
+
+# Implémentation knn
+
+```{r}
+ctrl = trainControl(method="none")
+fit.knn = train(bad_client_target ~ ., data = Dtrain, method="knn",
+tuneGrid=data.frame(k=5), trControl=ctrl)
+```
+
+# Prediction 
+```{r}
+pred.knn = predict(fit.knn, newdata=Dtest[,1:13])
+```
+
+
+# Matrice de confusion
+```{r}
+tab =table(pred.knn, Dtest$bad_client_target)
+mat = confusionMatrix(tab)
+print(mat$table)
+
+#Précision ou de taux de bien classés
+mat$overall["Accuracy"]
+
+#Taux de mal classés
+1-mat$overall["Accuracy"]
+```
+Avec k=5, le taux de précision est de 87% et le taux d’erreur est de 13%. C'est-à-dire avec un nombre de voisins k=5, sur les données entier, le taux qu’un client est bien classé (un bon ou un mauvais client) est de 87%. On a 374 de vrai négatif, 49 de faux négatif, 7 de faux positif et 0 de vrai positif.
+
+# Validation croisée
+
+# Implémentation de la validation croisée sur les k-NN
+```{r,warning=FALSE,message=FALSE}
+ctrl.cv = trainControl(method="cv",number=10)
+knnFit = train(bad_client_target ~ ., data = Dtrain, method = "knn",
+trControl = ctrl, tuneLength = 1,
+preProcess = c("center","scale"))
+```
+
+# Taux de succes ("Accuracy")
+```{r}
+x11()
+plot(knnFit)
+knnFit$results;knnFit$bestTune
+```
+
+Nous choisirons la valeur de k qui maximise le taux de précision de classification. Ce graphique montre le taux de précision des différents nombre de voisins. Avec un taux de bien 
+classes de 88,8%, k = 23 est le meilleur k.
+
+
+
+# Méthode logistique
+
+
+```{r}
+ctrl = trainControl(method="none")
+fit.lr = train(bad_client_target ~ ., data = Dtrain,method="glm",trControl=ctrl)
+print(fit.lr)
+
+#fréquences des classes sur l’éch. d’apprentissage et test
+print(prop.table(table(Dtrain$bad_client_target)))
+print(prop.table(table(Dtest$bad_client_target)))
+```
+Les deux bases ont la même répartition.
+
+# Analyse des variables :
+## Analysez les résultats du test de Student :
+
+```{r}
+summary(fit.lr$finalModel)
+#$coefficients
+print(varImp(fit.lr))
+```
+La variable la plus significative est les termes du crédit.
+
+# Critère AIC
+```{r}
+ctrl =trainControl("none")
+fit.aic = train(bad_client_target ~ ., data = Dtrain, method="glmStepAIC",
+                trControl=ctrl)
+```
+
+Après la selection selon le critère de l'AIC, on retient les variables credit_term, educationSecondary education, educationSecondary special education, product_typeAuto, product_typeCell phones, product_typeClothing, product_typeComputers, product_typeConstruction Materials, product_typeCosmetics and beauty services, product_typeFurniture, product_typeHousehold appliances, product_typeJewelry, is_client pour un AIC de 811,42.
+
+##  Prédictions des individus l’échantillon test sur le modèle estimé (sous forme de probabilité)
+```{r}
+score.lr = predict(fit.lr, newdata=Dtest)
+print(score.lr)
+```
+
+
+## On peut afficher les classes prédites :
+```{r}
+class.lr = predict(fit.lr,newdata=Dtest)
+#distribution des classes prédites
+table(class.lr)
+```
+#  Évaluation du modèle : scoring
+### Analyse de la table de confusion
+######### Donnez la table de confusion des classes prédites sur l’échantillon test :
+
+```{r}
+tab = table(data=class.lr,reference=Dtest$bad_client_target)
+mat = confusionMatrix(tab,positive="Yes")
+print(mat$table)
+```
+
+
+## 2. Affichez le taux de bien classés (ou précision).
+```{r}
+mat$overall["Accuracy"]
+```
+Le modèle nous donne un taux de bien classés de 88,6% qui est haut et un taux de mal classés de 11,5%. Ça veut dire qu’on a 88,6% de chance de bien détecter un bon ou un mauvais client
+
+
+#La courbe de ROC
+```{r}
+library(plotROC)
+D$bad_client_target=as.factor(D$bad_client_target)
+levels(D$bad_client_target)=c("No","Yes")
+
+g = ggplot(score.lr,  
+           aes(m=Yes,d=factor(Dtest$bad_client_target,levels=c("No","Yes"))) ) + 
+  geom_roc(n.cuts=20) + 
+  coord_equal() +
+  style_roc()
+```
+
+
+```{r}
+#Affichez l’indice AUC :
+calc_auc(g)$AUC
+
+#Ajoutez cet indice sur le graphe de la courbe ROC précédent :
+g + annotate("text", x=0.75, y=0.25,
+label=paste("AUC =",round(calc_auc(g)$AUC,4) ))
+```
+
+
+
+#la régression logistique avec la méthode de validation croisée
+
+##Implémentation 
+```{r}
+ctrl = trainControl(method="cv", classProbs=TRUE,
+summaryFunction=twoClassSummary,
+savePredictions = "all" )
+fitCV.lr = train(bad_client_target ~ ., data = D, method="glm",
+trControl=ctrl,metric = "ROC")
+```
+
+```{r}
+scoreCV.lr = fitCV.lr$pred
+print(head(scoreCV.lr))
+```
+
+
+#La courbe ROC :
+```{r}
+g.lr = ggplot(scoreCV.lr, aes(m=Yes,
+d=factor(obs, levels = c("No", "Yes"))) )+
+geom_roc(n.cuts=0) +
+coord_equal() +
+style_roc()
+g.lr + annotate("text", x=0.75, y=0.25,
+label=paste("AUC =", round((calc_auc(g.lr))$AUC, 4)))
+
+fitCV.lr$results
+```
+On a une courbe ROC avec un AUC de 0.7303. La discrimination est acceptable et l'ajustement est adéquat.
+
+
+
+#Comparaison avec les k-NN
+
+```{r}
+ctrl = trainControl(method="none")
+fit.knn = train(bad_client_target ~ ., data = Dtrain, method = "knn",
+trControl = ctrl, tuneGrid=data.frame(k=5),
+preProcess = c("center","scale"))
+fit.lr = train(bad_client_target ~ ., data = Dtrain, method = "glm",
+trControl = ctrl, preProcess = c("center","scale"))
+score.knn = predict(fit.knn ,newdata= Dtest,type="prob")
+score.lr = predict(fit.lr ,newdata= Dtest,type="prob")
+```
+#les courbes ROC issues de l’algorithme k-NN et de la régression logistique 
+```{r}
+
+```
+
+
+
+
+# la méthode du Bayésien Naïf
+```{r}
+ctrl <- trainControl(method = "cv", number = 5)
+# apprentissage par Le Bayésien Naïf
+fit.nb = train(bad_client_target ~ ., data = Dtrain, method="nb",trControl=ctrl)
+
+#prédictions sur l'échantillon test
+pred.nb = predict(fit.nb, newdata=Dtest,prob=TRUE)
+tab = table(pred.nb, Dtest$bad_client_target)
+
+#Matrice de confusion
+mat = confusionMatrix(tab)
+
+#Précision du modèle
+mat$overall["Accuracy"]
+```
+Ici la précision du modèle est de 88.6%.
+
+#validation croisée avec la méthode NB
+```{r}
+ctrl.cv = trainControl(method="cv", number=5, classProbs=TRUE,
+                       summaryFunction=twoClassSummary,
+                       savePredictions = "all" )
+
+levels(Dtrain$bad_client_target)=c("No","Yes")
+fitCV.nb = train(bad_client_target ~ ., data = Dtrain, method="nb",trControl=ctrl.cv,metric="ROC")
+```
+
+
+#Courbe de ROC NB
+```{r}
+scoreCV.nb = fitCV.nb$pred
+print(head(scoreCV.nb))
+
+g.nb = ggplot(scoreCV.nb, aes(m=Yes, d=factor(obs, levels = c("No", "Yes"))) )+
+geom_roc(n.cuts=0) +coord_equal() + style_roc()
+g.nb
+g.nb + annotate("text", x=0.75, y=0.25,
+label=paste("AUC =", round((calc_auc(g.nb))$AUC, 4)))+
+labs(title = "Courbe ROC NB")
+```
+On a une courbe ROC avec un AUC faible de 0.6433.
+
+#Quadratic Classifier QDA
+```{r}
+ctrl <- trainControl(method = "none", classProbs=TRUE,
+                     summaryFunction=twoClassSummary,
+                     savePredictions = "all")
+# apprentissage par qda
+fit.qda = train(bad_client_target ~ ., data = Dtrain, method="qda", trControl=ctrl, metric = "ROC")
+
+#prédictions sur l'échantillon test.
+pred.qda = predict(fit.qda, newdata=Dtest,prob=TRUE)
+tab2 = table(pred.qda, Dtest$bad_client_target)
+
+#Matrice de confusion
+mat2 = confusionMatrix(tab2)
+
+#Précision du modèle
+mat2$overall["Accuracy"]
+```
+
+
+#validation croisée avec la méthode NB
+```{r}
+ctrl.cv = trainControl(method="cv", number=5, classProbs=TRUE,
+                       summaryFunction=twoClassSummary,
+                       savePredictions = "all" )
+
+levels(Dtrain$bad_client_target)=c("No","Yes")
+fitCV.qda = train(bad_client_target ~ ., data = Dtrain, method="qda",trControl=ctrl.cv,metric="ROC")
+```
+
+
+#Courbe de ROC QDA
+```{r}
+scoreCV.qda = fitCV.qda$pred
+print(head(scoreCV.qda))
+
+g.qda = ggplot(scoreCV.qda, aes(m=Yes, d=factor(obs, levels = c("No", "Yes"))) )+
+geom_roc(n.cuts=0) +coord_equal() + style_roc()
+g.qda
+g.qda + annotate("text", x=0.75, y=0.25,
+label=paste("AUC =", round((calc_auc(g.qda))$AUC, 4)))+
+labs(title = "Courbe ROC QDA")
+```
+
+#LDA
+```{r}
+# apprentissage par lda
+fit.lda = train(bad_client_target ~ ., data = Dtrain, method="lda", trControl=ctrl)
+
+#prédictions sur l'échantillon test.
+pred.lda = predict(fit.lda, newdata=Dtest,prob=TRUE)
+tab3 = table(pred.lda, Dtest$bad_client_target)
+
+#Matrice de confusion
+mat3 = confusionMatrix(tab2)
+
+#Précision du modèle
+mat3$overall["Accuracy"]
+```
+
+
+#Validation croisée avec LDA
+```{r}
+ctrl.cv = trainControl(method="cv", number=5, classProbs=TRUE,
+                       summaryFunction=twoClassSummary,
+                       savePredictions = "all" )
+
+levels(Dtrain$bad_client_target)=c("No","Yes")
+set.seed(300)
+fitCV.lda = train(bad_client_target ~ ., data = Dtrain, method="lda",trControl=ctrl.cv,metric="ROC")
+```
+
+#Courbe de ROC LDA
+```{r}
+scoreCV.lda = fitCV.lda$pred
+print(head(scoreCV.lda))
+
+g.lda = ggplot(scoreCV.lda, aes(m=Yes, d=factor(obs, levels = c("No", "Yes"))) )+
+geom_roc(n.cuts=0) +coord_equal() + style_roc()
+g.nb
+g.nb + annotate("text", x=0.75, y=0.25,
+label=paste("AUC =", round((calc_auc(g.lda))$AUC, 4)))+
+labs(title = "Courbe ROC LDA")
+```
+
